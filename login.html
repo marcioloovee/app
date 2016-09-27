@@ -180,7 +180,7 @@
       var senha = $("#inputSenha").val();
 
       $.ajax({
-        url: localStorage.getItem("PATH_API")."autenticar.php?device="+device+"&login="+login+"&senha="+senha,
+        url: localStorage.getItem("PATH_API")+"autenticar.php?device="+device+"&login="+login+"&senha="+senha,
         success: function(data) {
           var result = $.base64.decode(data);
           var result = $.parseJSON(result);
