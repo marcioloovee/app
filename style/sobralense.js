@@ -1,26 +1,10 @@
 /* global PATH_API */
 localStorage.setItem("PATH_API","http://www.sobralense.com.br/api/");
 var PATH_API = localStorage.getItem("PATH_API");
- 
-$(window).ready(function(){
-  
-	function VerficaAuth() {
-    var a = localStorage.getItem("aute_status");
-    var b = localStorage.getItem("aute_id");
-    var c = localStorage.getItem("aute_email");
-    var d = localStorage.getItem("aute_usuario");
-    var e = localStorage.getItem("aute_token");
-    var f = localStorage.getItem("aute_img_perfil");
-    if (a && b && c && d && e) {
-        $("#info_usuario").attr("data-usuario-usuario",d);
-        $("#info_usuario").attr("data-usuario-code",b);
-        $("#info_usuario").attr("data-usuario-img-perfil",f);
-        $("#info_usuario").attr("data-usuario-usuario",d);          
-    } else {
-      window.location.href='./login.html';
-    }
-  }
-	VerficaAuth();
+
+
+$(function(){
+	VerificaAuth();
 
 
   $("section.pagina").hide();
@@ -46,10 +30,8 @@ $(window).ready(function(){
 	});
   
 
-  
-});
 
-$(function(){
+
   $("header").swipe({
     swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData, currentDirection) {
       if (direction === "down") {
@@ -67,6 +49,11 @@ $(function(){
     threshold:0,
     maxTimeThreshold: 100,
     fingers:'all'
+  });
+  
+  $(document).on("click","#BtnSair",function() {
+    localStorage.clear();
+    VerificaAuth();
   });
   
   $(document).on("click",".ModalSobralenseAbrir",function() {
@@ -317,13 +304,30 @@ function Ajax(url,data,type,selector) {
   return result;
 }
 
+function VerificaAuth() {
+  var a = localStorage.getItem("aute_status");
+  var b = localStorage.getItem("aute_id");
+  var c = localStorage.getItem("aute_email");
+  var d = localStorage.getItem("aute_usuario");
+  var e = localStorage.getItem("aute_token");
+  var f = localStorage.getItem("aute_img_perfil");
+  if (a && b && c && d && e) {
+      $("#info_usuario").attr("data-usuario-usuario",d);
+      $("#info_usuario").attr("data-usuario-code",b);
+      $("#info_usuario").attr("data-usuario-img-perfil",f);
+      $("#info_usuario").attr("data-usuario-usuario",d);          
+  } else {
+    document.location='./login.html';
+  }
+}
+
 function Timeline(ult_post) {
 	var token = localStorage.getItem("aute_token");
 	var usuario = $("#hide_usuario").val();
   var pagina = $("#hide_pagina").val();
   var last = $("#hide_paginacao").val();
   var url = PATH_API+"timeline.php?token="+token+"&last="+ last + "&usuario=" + usuario + "&pagina=" + pagina + "&ult_post=" + ult_post;
-  //alert(url);
+  //alert(token);
 	$.ajax({
 		type: "GET",
   	url: url,
