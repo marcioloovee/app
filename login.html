@@ -155,7 +155,7 @@
               <img class="profile-img-card" src="./img/sobralense_icon.png" alt="Sobralense" /> 
               <p id="profile-name" class="profile-name-card"></p>
               <form class="form-signin">
-                  <span id="reauth-email" class="reauth-email"></span>
+                  <span id="reauth-email" class="reauth-email" style="color: red"></span>
                   <input type="hidden" id="device" value="teste" />
                   <input type="email" id="inputEmail" class="form-control" placeholder="E-mail/Usuário" required autofocus>
                   <input type="password" id="inputSenha" class="form-control" placeholder="Senha" required>
@@ -174,32 +174,42 @@
 
     </div>
     <script>
-    $(document).on("click","#BtnEntrar",function() {
-      var device = $("#device").val();
-      var login = $("#inputEmail").val();
-      var senha = $("#inputSenha").val();
-
-      $.ajax({
-        url: "http://www.sobralense.com.br/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
-        success: function(data) {
-          var result = $.base64.decode(data);
-          var result = $.parseJSON(result);
-          localStorage.setItem("aute_status","ok");
-          localStorage.setItem("aute_id",result.id);
-          localStorage.setItem("aute_email",result.email);
-          localStorage.setItem("aute_usuario",result.usuario);
-          localStorage.setItem("aute_img_perfil",result.img_perfil);
-          localStorage.setItem("aute_img_capa",result.img_capa);
-          localStorage.setItem("aute_token",data);
-          alert("Login feito com sucesso!")
-          window.location.href="index.html";
-        },
-        error: function() {
-          alert("Erro!");
-        }
+    $(function() {
+      $(document).on("click","#BtnEntrar",function() {
+        var device = $("#device").val();
+        var login = $("#inputEmail").val();
+        var senha = $("#inputSenha").val();
+        $("#reauth-email").html("");
+        $.ajax({
+          type: "GET",
+          url: "http://www.sobralense.com.br/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
+          success: function(data) {
+            var result = $.parseJSON(data);
+            if (result.status == "success") {
+              var r = $.base64.decode(result.token);
+              var r = $.parseJSON(r);
+              
+              localStorage.setItem("aute_status","ok");
+              localStorage.setItem("aute_id",result.id);
+              localStorage.setItem("aute_email",result.email);
+              localStorage.setItem("aute_usuario",result.usuario);
+              localStorage.setItem("aute_img_perfil",result.img_perfil);
+              localStorage.setItem("aute_img_capa",result.img_capa);
+              localStorage.setItem("aute_token",data);
+              alert(result.log);
+              window.location.href="index.html";
+              
+            } else {
+              $("#reauth-email").html("Usuário/Senha inválido. Tente novamente!");
+            }
+              
+              
+          }
+        });
+        return false;
       });
-      return false;
     });
+      
     </script>
   </body>
 </html>
