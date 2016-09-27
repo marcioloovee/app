@@ -1,0 +1,19 @@
+<?php
+require_once("../../portamil/config.php");
+require_once("../../portamil/bancodedados.php");
+require_once("../../portamil/geral.php");
+require_once("../functions/Usuario.php");
+?>
+<div class='pagina_explorar'>
+	<input type="hidden" id="hide_pagina" 	 value="explorar" />
+	<input type="hidden" id="hide_paginacao" value="1" />
+
+	<div class="content p-md">
+		<div><i class="material-icons">explore</i> Explorar</div>
+    <input type="text" id="input_buscar" placeholder="Buscar..." class="m-n p-n mt-sm pl-sm noshadow noradius" />
+		<div class="col-xs-12 mt-md p-n">
+			<div class="lista box"></div>
+		</div>	
+	</div>
+	<center><a href='#' class="btn btn-link btn-xs btn-carregar-mais" onclick="Explorar();"><i class='fa fa-spinner'></i> carregar mais...</a><br><br></center>
+</div>

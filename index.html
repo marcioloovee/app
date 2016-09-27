@@ -1,0 +1,56 @@
+
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <title>Sobralense - Mobile</title>
+    <link type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./lib/jquery.mobile-1.4.5.min.css">
+    <script src="./lib/jquery-2.2.4.min.js"></script>
+    <script src='./lib/jquery.mobile-1.4.5.min.js'></script>
+    <script src="./lib/jquery.touchSwipe.js"></script>
+    <script src='./style/sobralense.js'></script>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/sobralense.css">
+    <script>
+    
+    
+    </script>
+  </head>
+  <body>
+    <div class="atualiza_section">...</div>
+    <div id='app'>
+      <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
+      
+      <header>
+        <div class='title'>Sobralense</div>
+      </header>
+
+
+      <section class="pagina" id="inicio" data-load="n" data-previous='none' data-next='mensagens'></section>
+      <section class="pagina" id="mensagens" data-load="n" data-previous='inicio' data-next='explorar'></section>
+      <section class="pagina" id="explorar" data-load="n" data-previous='mensagens' data-next='noticias'></section>
+      <section class="pagina" id="noticias" data-load="n" data-previous='explorar' data-next='eventos'></section>
+      <section class="pagina" id="eventos" data-load="n" data-previous='noticias' data-next='lugares'></section>
+      <section class="pagina" id="lugares" data-load="n" data-previous='eventos' data-next='none'></section>
+      <section class="pagina" id="perfil" data-load="n" style="margin-top: 0px;"></section>
+
+      <footer>
+        <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="material-icons">home</i></a>
+        <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="material-icons">explore</i></a>
+        <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="material-icons">event_note</i></a>
+        <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="material-icons">info</i></a>
+        <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="material-icons">place</i></a>
+      </footer>
+
+      <div class="ModalSobralense" style="display: none;">
+        <div class="ModalSobralenseClose"><i class="material-icons ModalSobralenseBtnClose">arrow_back</i></div>
+        <div class="ModalSobralenseContent">
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<div class='pagina_inicio'>
+  <input type="hidden" id="hide_pagina" 	    value="inicio" />
+  <input type="hidden" id="hide_usuario" 	    value="" />
+  <input type="hidden" id="hide_paginacao" 		value="1" />
+  <div class="box hide" style="border: 0px;">
+    <form>
+      <div class="box_postar_timeline_foto">
+        <img src="" height="50" width="50" class="img-circle" id="box_postar_img_perfil" />
+      </div>
+      <div class="box_postar_timeline_input">
+        <textarea id="input_mensagem_postar" placeholder="No que está pensando..."></textarea>
+      </div>
+      <div class="box_postar_timeline_submit">
+        <button class="btn btn-success" id="btn_postar"><i class="material-icons">send</i></button>
+      </div> 
+    </form>
+  </div>
+  <div class="show_timeline"></div>
+  <center><a href='#' class="btn btn-link btn-xs btn-carregar-mais" onclick="Timeline();"><i class='fa fa-spinner'></i> carregar mais...</a><br><br></center>
+</div>
