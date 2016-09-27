@@ -148,7 +148,7 @@
     </style>
   </head>
   <body>
-    <div id='app'>
+    <div id='login'>
       
       <div class="container">
           <div class="card card-container">
@@ -190,14 +190,14 @@
               var r = $.parseJSON(r);
               
               localStorage.setItem("aute_status","ok");
-              localStorage.setItem("aute_id",result.id);
-              localStorage.setItem("aute_email",result.email);
-              localStorage.setItem("aute_usuario",result.usuario);
-              localStorage.setItem("aute_img_perfil",result.img_perfil);
-              localStorage.setItem("aute_img_capa",result.img_capa);
+              localStorage.setItem("aute_id",r.id);
+              localStorage.setItem("aute_email",r.email);
+              localStorage.setItem("aute_usuario",r.usuario);
+              localStorage.setItem("aute_img_perfil",r.img_perfil);
+              localStorage.setItem("aute_img_capa",r.img_capa);
               localStorage.setItem("aute_token",data);
               alert(result.log);
-              window.location.href="index.html";
+              document.location="index.html";
               
             } else {
               $("#reauth-email").html("Usuário/Senha inválido. Tente novamente!");
