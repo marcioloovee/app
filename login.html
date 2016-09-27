@@ -180,7 +180,7 @@
       var senha = $("#inputSenha").val();
 
       $.ajax({
-        url: localStorage.getItem("PATH_API")+"autenticar.php?device="+device+"&login="+login+"&senha="+senha,
+        url: "http://www.sobralense.com.br/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
         success: function(data) {
           var result = $.base64.decode(data);
           var result = $.parseJSON(result);
@@ -191,6 +191,7 @@
           localStorage.setItem("aute_img_perfil",result.img_perfil);
           localStorage.setItem("aute_img_capa",result.img_capa);
           localStorage.setItem("aute_token",data);
+          alert("Login feito com sucesso!")
           window.location.href="index.html";
         },
         error: function() {
