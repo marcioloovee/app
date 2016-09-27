@@ -201,8 +201,9 @@
             } else {
               $("#reauth-email").html("Usuário/Senha inválido. Tente novamente!");
             }
-              
-              
+          },
+          error: function(a,b) {
+            $("#reauth-email").html("Houve um erro!");
           }
         });
         return false;
