@@ -29,8 +29,16 @@ $(function(){
 	  }
 	});
   
-
-
+  document.addEventListener("backbutton", function(e){
+    alert("Botão voltar!");
+    return false;
+    /*if($.mobile.activePage.is('#homepage')){
+      navigator.app.exitApp();
+    }
+    else {
+      navigator.app.backHistory()
+    }*/
+  }, false);
 
   $("header").swipe({
     swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData, currentDirection) {
