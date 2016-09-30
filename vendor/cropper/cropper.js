@@ -806,7 +806,7 @@
       $cropper.css((this.container = {
         //width: max($container.width(), num(options.minContainerWidth) || 200),
         //height: max($container.height(), num(options.minContainerHeight) || 100)
-        width: max(($container.width() / $container.height()) * (screen.height - 105), screen.width - 10),
+        width: max(($container.width() / $container.height()) * (window.innerHeight - 105), window.innerWidth - 10),
         height: max(screen.height - 105)
       }));
 

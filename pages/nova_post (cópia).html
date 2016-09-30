@@ -15,9 +15,12 @@
         <span class="nome" style="cursor: pointer;"></span>
       </div>
       <div class="btn_upload">
+        <!--
         <label class="btn btn-default" id="btn_selecionar_foto" onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
           <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" accept="image/jpeg" />
         </label>
+        -->
+        <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" type="button">From Photo Library</button>
       </div>
       <footer class="center">
         <button class="btn btn-success" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
@@ -39,7 +42,18 @@
   </form>
 </div>
 <script type="text/javascript">
+  
+  function getPhoto(source) {
+      alert("ok");
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
 
+  
+  
+  /*
   var $imageContainer = $('#image-container');
   $("#btn_selecionar_foto_").change(function() {
     $(".mensagem").hide();
@@ -83,6 +97,7 @@
       });
     });
   });
+  */
 
   $("#formupload").submit(function() {
     
