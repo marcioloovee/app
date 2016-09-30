@@ -10,7 +10,7 @@
   <preference name="Orientation" value="portrait" />-->
   
   <gap:plugin name="cordova-plugin-whitelist" source="npm" />
-  <gap:plugin name="com.phonegap.plugins.pushplugin" spec="2.5.0" source="pgb" />
+  <gap:plugin name="com.cesidiodibenedetto.filechooser" spec="1.0.0" source="pgb" />
 
   <name>Sobralense</name>
 
