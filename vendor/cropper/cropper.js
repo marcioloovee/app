@@ -806,8 +806,8 @@
       $cropper.css((this.container = {
         //width: max($container.width(), num(options.minContainerWidth) || 200),
         //height: max($container.height(), num(options.minContainerHeight) || 100)
-        width: max(($container.width() / $container.height()) * ($(".box_postar").innerHeight() - 105), $(".box_postar").innerWidth() - 10),
-        height: max(screen.height - 105)
+        width: max(($container.width() / $container.height()) * (window.innerHeight - 105), window.innerWidth - 10),
+        height: max(window.innerHeight - 105)
       }));
 
       $this.addClass(CLASS_HIDDEN);
