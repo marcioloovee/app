@@ -5,9 +5,9 @@
     versionCode = "1"
     version     = "1.0.0" >
 
-<!-- versionCode is optional and Android only -->
+<!-- versionCode is optional and Android only
   <preference name="Fullscreen" value="true" />
-  <preference name="Orientation" value="portrait" />
+  <preference name="Orientation" value="portrait" />-->
   
   <gap:plugin name="cordova-plugin-whitelist" source="npm" />
 
