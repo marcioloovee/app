@@ -42,7 +42,7 @@
 <script type="text/javascript">
   
   if( device.platform.toLowerCase() === 'android' && device.version.indexOf( '4.4' ) === 0 ) {
-      $('#fileinput').click( function(e) {
+      $('#btn_selecionar_foto_').click( function(e) {
           filechooser.open( {}, success, error );
       });
   }
