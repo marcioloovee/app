@@ -10,7 +10,7 @@
   <preference name="Orientation" value="portrait" />-->
   
   <gap:plugin name="cordova-plugin-whitelist" spec="1.3.0" source="npm" />
-  <gap:plugin name="com.logilite.vision.camera" spec="0.2.11" source="pgb" />
+  <gap:plugin name="Camera" value="org.apache.cordova.camera" />
 
 
   <name>Sobralense</name>
