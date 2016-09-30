@@ -10,7 +10,6 @@
   <preference name="Orientation" value="portrait" />-->
   
   <gap:plugin name="cordova-plugin-whitelist" source="npm" />
-  <gap:plugin name="com.cesidiodibenedetto.filechooser" spec="1.0.0" source="pgb" />
 
   <name>Sobralense</name>
 
