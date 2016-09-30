@@ -15,9 +15,10 @@
         <span class="nome" style="cursor: pointer;"></span>
       </div>
       <div class="btn_upload">
-        <label class="btn btn-default" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+        <!--<label class="btn btn-default" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
           <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" />
-        </label>
+        </label>-->
+        <input id="btn_selecionar_foto_" type="file" class="ui-btn" name="image-upload" />
       </div>
       <footer class="center">
         <button class="btn btn-success" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
@@ -39,6 +40,24 @@
   </form>
 </div>
 <script type="text/javascript">
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+    navigator.camera.getPicture(
+            getPhoto,
+            function(message) { alert('get picture failed'); },
+            {
+              quality         : 50,
+              destinationType : navigator.camera.DestinationType.FILE_URI,
+              sourceType      : navigator.camera.PictureSourceType.PHOTOLIBRARY
+            }
+          );
+  }
+  function getPhoto(imageURI) {
+    alert(imageURI);
+  }
+  
+  
+  
   var $imageContainer = $('#image-container');
   $("#btn_selecionar_foto_").change(function() {
     $(".mensagem").hide();
