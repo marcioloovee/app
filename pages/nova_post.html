@@ -1,5 +1,5 @@
 <div class="box_postar">
-  <form id="formupload" method="post" enctype="multipart/form-data">
+  <form id="formupload" method="post" enctype="multipart/form-data" onsubmit="return false;">
     <div class="mensagem">
       <div class="timeline_header">
         <img src='{{img_perfil}}' height='40' width='40' class='pull-left img-circle' />
@@ -15,7 +15,7 @@
         <span class="nome" style="cursor: pointer;"></span>
       </div>
       <div class="btn_upload">
-        <label class="btn btn-default" id="btn_selecionar_foto" onclick="getPhoto(pictureSource.PHOTOLIBRARY);"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+        <label class="btn btn-default" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
           <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" accept="image/jpeg" />
         </label>
       </div>
