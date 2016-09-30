@@ -4,15 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Sobralense - Mobile</title>
-    <link type='text/css' href='https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500' rel='stylesheet'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link type='text/css' href='./vendor/font/roboto.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="./vendor/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="./lib/jquery.mobile-1.4.5.min.css">
     <script src="./lib/jquery-2.2.4.min.js"></script>
     <script src='./lib/jquery.mobile-1.4.5.min.js'></script>
     <script src="./lib/jquery.touchSwipe.js"></script>
-    <script src='./style/sobralense.js'></script>
+    <script src='./vendor/waves/waves.min.js'></script>
+    <script src='./vendor/cropper/cropper.js'></script>
+    
     <link rel="stylesheet" href="./lib/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/waves/waves.min.css">
+    <link rel="stylesheet" href="./vendor/cropper/cropper.min.css">
+    
+    <script src='./style/sobralense.js'></script>
     <link rel="stylesheet" href="./style/sobralense.css">
     <script>
     
@@ -23,9 +28,15 @@
     <div class="atualiza_section">...</div>
     <div id='app'>
       <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
+      <div class="hide" id="info_geral" data-pagina-atual=''></div>
       
       <header>
-        <div class='title'>Sobralense <a href="#" id="BtnSair" class="pull-right">[sair]</a></div>
+        <div class='title'>
+          <i class="fa fa-white fa-bars waves waves-cir pull-left" style="margin-top: 3px; margin-right: 15px; margin-left: 4px; font-size: 24px;"></i>
+          <span class="txt">Sobralense</span>
+          <!--<a href="#" id="BtnSair" class="pull-right">[sair]</a>-->
+          <i class="fa fa-white fa-search waves waves-cir pull-right" style="margin-top: 3px; margin-right: 4px !important; font-size: 24px;"></i>
+        </div>
       </header>
 
 
@@ -36,19 +47,24 @@
       <section class="pagina" id="eventos" data-load="n" data-previous='noticias' data-next='lugares'></section>
       <section class="pagina" id="lugares" data-load="n" data-previous='eventos' data-next='none'></section>
       <section class="pagina" id="perfil" data-load="n" style="margin-top: 0px;"></section>
-
+      
+      
+      <div id="btn_postar_mais" class="pull-right btn_postar_mais waves ModalSobralenseAbrir" data-title="Nova publicação...">
+        +
+      </div>
+      
       <footer>
-        <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="material-icons">home</i></a>
-        <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="material-icons">explore</i></a>
-        <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="material-icons">event_note</i></a>
-        <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="material-icons">info</i></a>
-        <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="material-icons">place</i></a>
+        <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="fa fa-white fa-home"></i></a>
+        <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="fa fa-white fa-map"></i></a>
+        <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="fa fa-white fa-calendar-o"></i></a>
+        <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="fa fa-white fa-info-circle"></i></a>
+        <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="fa fa-white fa-map-marker"></i></a>
       </footer>
 
       <div class="ModalSobralense" style="display: none;">
-        <div class="ModalSobralenseClose"><i class="material-icons ModalSobralenseBtnClose">arrow_back</i></div>
+        <div class="ModalSobralenseClose"><i class="fa fa-white fa-2x fa-arrow-left ModalSobralenseBtnClose"></i> <span></span></div>
         <div class="ModalSobralenseContent">
-
+          teste
         </div>
       </div>
     </div>

@@ -1,16 +1,22 @@
 /* global PATH_API */
 localStorage.setItem("PATH_API","http://www.sobralense.com.br/api/");
+//localStorage.setItem("PATH_API","http://localhost/sobralense/api/");
 var PATH_API = localStorage.getItem("PATH_API");
 
 
 $(function(){
 	VerificaAuth();
-
-
+  $(document).on('ready', function() {
+    Waves.init();
+    Waves.attach('footer a, .waves',null);
+  });
+  
   $("section.pagina").hide();
   
   $("section#inicio").load("./pages/inicio.html",function() {
     $(this).show();
+    $("#info_geral").attr("data-pagina-atual","inicio");
+    $("footer [data-src=inicio]").addClass("active");
     $("section#inicio").attr("data-load","s");
     $("#box_postar_img_perfil").attr("src",localStorage.getItem("aute_img_perfil"));
     $("#hide_usuario").val(localStorage.getItem("aute_id"));
@@ -28,17 +34,6 @@ $(function(){
 		  }
 	  }
 	});
-  
-  document.addEventListener("backbutton", function(e){
-    alert("Botão voltar!");
-    return false;
-    /*if($.mobile.activePage.is('#homepage')){
-      navigator.app.exitApp();
-    }
-    else {
-      navigator.app.backHistory()
-    }*/
-  }, false);
 
   $("header").swipe({
     swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData, currentDirection) {
@@ -65,12 +60,17 @@ $(function(){
   });
   
   $(document).on("click",".ModalSobralenseAbrir",function() {
+    var title = $(this).attr("data-title");
+    $(".ModalSobralenseClose span").text(title);
+    $("header").hide();
     $(".ModalSobralense").fadeIn();
   });
 
   $(document).on("click",".ModalSobralenseBtnClose",function() {
     $(".ModalSobralense").fadeOut();
+    $(".ModalSobralenseClose span").text("");
     $(".ModalSobralenseContent").html("");
+    $("header").show();
   });
   
   $(document).on("click","[data-a=navegar]", function() {
@@ -80,11 +80,17 @@ $(function(){
       $("section#perfil").html("");
     }
     
-    $("header .title").text(title);
+    if (page === "inicio") {
+      $("#btn_postar_mais").show();
+    } else {
+      $("#btn_postar_mais").hide();
+    }
+    
+    $("header .title span.txt").text(title);
     $("footer a").removeClass("active");
     $(this).addClass("active");
-    $("section.pagina").hide();
-    $("section#"+page).show();
+    $("section.pagina").fadeOut();
+    $("section#"+page).fadeIn();
     var data_load = $("section#"+page).attr("data-load");
     if (data_load === "n" || page==="perfil") {
       var retorno = Ajax("./pages/"+page+".html","","GET","");
@@ -92,6 +98,7 @@ $(function(){
       if (retorno === "erro_404") {
         $("section#"+page).html("<br><br><center>Página não encontrada!</center>");
       } else {
+        $("#info_geral").attr("data-pagina-atual",page);
         $("section#"+page).html(retorno);
         $("section#"+page).attr("data-load","s");
       }
@@ -142,8 +149,8 @@ $(function(){
             html += "<i class='fa fa-thumbs-up "+icon+"'></i> ";
             if (k.item.total_likes > 0) html += " <small>"+k.item.total_likes+"</small>"; 
             html += "</a>" +
-            "<a class='btn' data-a='acao' data-type='box_comentar' data-id='"+k.id+"' data-open='n'><i class='fa fa-comment'></i> ";
-            if (k.item.total_comen > 0) html += " <small id='box_total_comentarios_"+k.id+"'>"+k.item.total_comen+"</small>"; 
+            "<a class='btn' data-a='acao' data-type='box_comentar' data-id='"+id+"' data-open='n'><i class='fa fa-comment'></i> ";
+            if (k.item.total_comen > 0) html += " <small id='box_total_comentarios_"+id+"'>"+k.item.total_comen+"</small>"; 
             html += "</a>";
             $(this).parent().html(html);
           } else {
@@ -253,6 +260,7 @@ $(function(){
     }
   });
   
+  /*
   $(document).on("click","#btn_postar",function () { //fazer postagem na timeline
     var usuario = $("#hide_usuario").val();
     var pagina = $("#hide_pagina").val();
@@ -279,6 +287,7 @@ $(function(){
     });
     return false;
   });
+  */
 
   $(document).on("keyup","#input_buscar", function(event) {
     var buscar = $(this).val();
@@ -291,6 +300,14 @@ $(function(){
      }
   });
   
+  $(document).on("click",".btn_postar_mais", function() {
+    var html= Ajax("./pages/nova_post.html","","GET","");
+    html = html.replace("{{img_perfil}}",localStorage.getItem("aute_img_perfil"));
+    html = html.replace("{{usuario}}",localStorage.getItem("aute_nome"));
+    html = html.replace("{{token}}",localStorage.getItem("aute_token"));
+    html = html.replace("{{pagina}}",$("#info_geral").attr("data-pagina-atual"));
+    $(".ModalSobralenseContent").html(html);
+  });
   
 });
 
@@ -335,7 +352,7 @@ function Timeline(ult_post) {
   var pagina = $("#hide_pagina").val();
   var last = $("#hide_paginacao").val();
   var url = PATH_API+"timeline.php?token="+token+"&last="+ last + "&usuario=" + usuario + "&pagina=" + pagina + "&ult_post=" + ult_post;
-  //alert(token);
+  
 	$.ajax({
 		type: "GET",
   	url: url,
@@ -347,7 +364,7 @@ function Timeline(ult_post) {
   			$.each(data, function(p,k) {
   				html += "<div id='box_post_"+k.id+"' class='box "; if (ult_post) html+= "ult_post"; html += "'>" +
 										"<div class='timeline_header'>" +
-											"<a href='#' data-a='navegar' data-src='perfil' data-id='"+k.id_usuario+"' data-type='.ui-content' data-async='false'><img src='"+k.img_perfil+"' height='40' width='40' class='pull-left img-circle' /></a>" +
+											"<a href='#' data-a='navegar' data-src='perfil' data-id='"+k.id_usuario+"'><img src='"+k.img_perfil+"' height='40' width='40' class='pull-left img-circle' /></a>" +
 											"<div class='timeline_title'>";
 												
 												html += "<span><a href='#' data-a='navegar' data-src='perfil' data-id='"+k.id_usuario+"'>"+k.usuario+"</a></span>" +
@@ -358,7 +375,7 @@ function Timeline(ult_post) {
 											"<div class='text'>" +
 												k.mensagem +
 											"</div>";
-											if (k.img_post) { html += "<center><img src='"+k.img_post+"' class='img-responsive mt-sm' /></center>"; }
+											if (k.img_post) { html += "<div class='timeline_img'><center><img src='"+k.img_post+"' class='img-responsive mt-sm' /></center></div>"; }
 											html += "</div>" +
 										"<div class='timeline_footer btn-group' role='group'><div class='actions pull-left'>" +
 											"<a class='btn' data-a='acao' data-type='curtir_timeline' data-id='"+k.id+"'>";
@@ -369,7 +386,7 @@ function Timeline(ult_post) {
 											html += "</a>" +
 											"<a class='btn' data-a='acao' data-type='box_comentar' data-id='"+k.id+"' data-open='n'><i class='fa fa-comment'></i> ";
 											if (k.total_comen > 0) html += "<small id='box_total_comentarios_"+k.id+"'>"+k.total_comen+"</small>"; 
-											html += "</a></div><div class='pull-right'><a class='btn ModalSobralenseAbrir' data-a='acao' data-type='info_timeline' data-id='"+k.id+"'><i class='fa fa-info'></i>&nbsp;</a>";
+											html += "</a></div><div class='pull-right'><a class='btn ModalSobralenseAbrir' data-title='Detalhes...' data-a='acao' data-type='info_timeline' data-id='"+k.id+"'><i class='fa fa-info'></i>&nbsp;</a>";
                       if (k.meu==="s") html += "<a class='btn' data-a='acao' data-type='remover' data-id='"+k.id+"' data-src='post' data-content='#box_post_"+k.id+"'><i class='fa fa-close'></i>&nbsp;</a>";
                       
 										html += "</div></div>" +
@@ -408,7 +425,7 @@ function BoxComentar(id) {
               "<textarea id='input_mensagem_comentar' placeholder='Deixe seu comentário...'></textarea>" +
             "</div>" +
             "<div class='box_postar_timeline_submit'>" +
-              "<button class='btn btn-success' id='btn_comentar' data-a='acao' data-type='comentar' data-id='"+id+"'><i class='material-icons'>send</i></button>" +
+              "<button class='btn btn-success' id='btn_comentar' data-a='acao' data-type='comentar' data-id='"+id+"'><i class='fa fa-white fa-send'></i></button>" +
             "</div>" +
           "</form>";
 	return html;

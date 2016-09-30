@@ -185,13 +185,14 @@
           url: "http://www.sobralense.com.br/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
           success: function(data) {
             var result = $.parseJSON(data);
-            if (result.status == "success") {
+            if (result.status === "success") {
               var r = $.base64.decode(result.token);
               var r = $.parseJSON(r);
               
               localStorage.setItem("aute_status","ok");
               localStorage.setItem("aute_id",r.id);
               localStorage.setItem("aute_email",r.email);
+              localStorage.setItem("aute_nome",r.nome);
               localStorage.setItem("aute_usuario",r.usuario);
               localStorage.setItem("aute_img_perfil",r.img_perfil);
               localStorage.setItem("aute_img_capa",r.img_capa);

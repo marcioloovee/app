@@ -7,8 +7,7 @@
 
 <!-- versionCode is optional and Android only -->
   <preference name="Fullscreen" value="true" />
-		
-	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
+  <preference name="Orientation" value="portrait" />
 
   <name>Sobralense</name>
 

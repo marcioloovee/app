@@ -1,0 +1,132 @@
+<div class="box_postar">
+  <form id="formupload" method="post" enctype="multipart/form-data">
+    <div class="mensagem">
+      <div class="timeline_header">
+        <img src='{{img_perfil}}' height='40' width='40' class='pull-left img-circle' />
+        <div class='timeline_title'>
+          <span>{{usuario}}</span>
+        </div>
+      </div>
+      <div>
+        <textarea placeholder="No que está pensando..." id="input_mensagem" name="mensagem"></textarea>
+      </div>
+      <div id="imagem_escolhida" style="display: none; height: 40px; line-height: 40px;">
+        <span class="pull-left close" style="padding: 8px; font-size:28px">&times;</span>
+        <span class="nome" style="cursor: pointer;"></span>
+      </div>
+      <div class="btn_upload">
+        <label class="btn btn-default" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+          <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" />
+        </label>
+      </div>
+      <footer class="center">
+        <button class="btn btn-success" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
+      </footer>
+    </div>
+    <div class="foto" style="display:none;">
+      <input type="hidden" name="token" value="{{token}}" />
+      <input type="hidden" name="pagina" value="{{pagina}}" />
+      <input type="hidden" name="acao" value="carregar" />
+      <input type="hidden" name="y" id="y" />
+      <input type="hidden" name="x" id="x" />
+      <input type="hidden" name="w" id="w" />
+      <input type="hidden" name="h" id="h" />
+      <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important;"></div>
+      <footer class="center">
+        <button class="btn btn-info" id="voltar" type="button"><i class="fa fa-white fa-check" aria-hidden="true"></i> CONTINUAR</button>
+      </footer>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+  var $imageContainer = $('#image-container');
+  $("#btn_selecionar_foto_").change(function() {
+    $(".mensagem").hide();
+    $(".foto").show();
+    var src = window.URL.createObjectURL(this.files[0]);
+
+    var $image = $('<img/>');
+
+    $image.attr({src: src}).load(function () {
+      $("#btn_salvar").show();
+      $("#formupload textarea").show();
+      
+      var nome_img = $("#btn_selecionar_foto_").val();
+      if (nome_img) {
+        $(".btn_upload").hide();
+        if (nome_img.length > 30) {
+          var nome_img2 = "";
+          for (var i=1; i<=30;i++,nome_img2+=nome_img[i]);
+          nome_img2 += "...";
+        } else {
+          var nome_img2 = nome_img;
+        }
+        
+        $("#imagem_escolhida .nome").text(nome_img2);
+        $("#imagem_escolhida").show();
+      }
+
+      $imageContainer.html($image);
+      $image.cropper({
+        viewMode: 1,
+        guides: false,
+        zoomable: true,
+        aspectRatio: NaN,
+        preview: ".img-preview",
+        crop: function (e) {
+          $('#x').val(e.x);
+          $('#y').val(e.y);
+          $('#w').val(e.width);
+          $('#h').val(e.height);
+        }
+      });
+    });
+  });
+
+  $("#formupload").submit(function() {
+    
+    $.ajax({
+      type: "POST",
+      url: "http://www.sobralense.com.br/api/postar.php",
+      data: new FormData(this),
+      async: false,
+      success: function (data) {
+        var k = $.parseJSON(data);
+        if (k.status === "success") {
+          Timeline(k.id_post);
+          $('.ModalSobralenseBtnClose').click();
+        } else {
+          alert(k.log);
+        }
+
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    });
+
+    return false;
+  });
+  
+  $(document).on("click",".box_postar #voltar", function() {
+    $(".mensagem").show();
+    $(".foto").hide();
+  });
+  
+  $(document).on("click","#imagem_escolhida .nome", function() {
+    $(".mensagem").hide();
+    $(".foto").show();
+  });
+  
+  $(document).on("click","#imagem_escolhida .close", function() {
+    var $image = $('<img/>');
+    $image.cropper("destroy");
+    $("#btn_selecionar_foto_").val("");
+    $("#imagem_escolhida").hide();
+    $(".btn_upload").show();
+  });
+  
+  $(document).on("click","#btn_postar",function() {
+    $("#formupload").submit();
+  });
+</script>
