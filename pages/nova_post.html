@@ -20,7 +20,7 @@
           <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" accept="image/jpeg" />
         </label>
         -->
-        <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);" type="button">From Photo Library</button>
+        <button onclick="getPhoto();" type="button">From Photo Library</button>
       </div>
       <footer class="center">
         <button class="btn btn-success" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
@@ -44,12 +44,18 @@
 <script type="text/javascript">
   
   function getPhoto(source) {
-      alert("ok");
-      // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
-        destinationType: destinationType.FILE_URI,
-        sourceType: source });
-    }
+      var options = {
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: Camera.PictureSourceType.CAMERA
+      };
+      navigator.camera.getPicture(sucesso,erro, options);
+  }
+  function sucesso(img) {
+    alert(img);
+  }
+  function erro(erro) {
+    alert(erro);
+  }
 
   
   
