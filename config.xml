@@ -8,6 +8,7 @@
 <!-- versionCode is optional and Android only
   <preference name="Fullscreen" value="true" />
   <preference name="Orientation" value="portrait" />-->
+  <content src="index.html" />
   
   <gap:plugin name="cordova-plugin-whitelist" spec="1.3.0" source="npm" />
   <gap:plugin name="org.apache.cordova.camera" />

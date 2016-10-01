@@ -19,35 +19,118 @@
     <link rel="stylesheet" href="./style/sobralense.css">
     <script>
     </script>
+    
+    <style>
+    .filter-sepia {
+        -webkit-filter: sepia(100%);
+        -moz-filter: sepia(100%);
+        -ms-filter: sepia(100%);
+        -o-filter: sepia(100%);
+        filter: sepia(100%);
+    }
+    
+    .filter-grayscale {
+        -webkit-filter: grayscale(1);
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+        filter: url(#greyscale);
+        filter: gray;
+        border-radius: 50px;
+    }
+    </style>
+    
+    <script>
+     document.getElementById("btnsepia").onclick = function(){
+      $("#largeImage").removeClass("filter-grayscale");
+      $("#largeImage").addClass("filter-sepia");
+      }
+     document.getElementById("btnblack").onclick = function(){
+      $("#largeImage").removeClass("filter-sepia");
+      $("#largeImage").addClass("filter-grayscale");     
+       }
+      document.getElementById("btnoriginal").onclick = function(){
+      $("#largeImage").removeClass("filter-grayscale");
+      $("#largeImage").removeClass("filter-sepia");
+      }
+    </script>
+
+    <script>
+    var destinationType; // sets the format of returned value 
+    var pictureSource; // picture source
+    // Wait for Cordova to connect with the device
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+    } // Cordova is ready to be used!
+    // Take picture using device camera and retrieve image as base64-encoded string
+    function capturePhoto() {
+        navigator.camera.getPicture(onPhotoDataSuccess, onFail, {
+            quality: 50
+            , allowEdit: true
+            , saveToPhotoAlbum: true
+            , destinationType: destinationType.DATA_URL
+        });
+    }
+    // Called if something bad happens. 
+    function onFail(message) {
+        alert('Failed because: ' + message);
+    }
+
+    function onPhotoDataSuccess(imageData) {
+        // Uncomment to view the base64 encoded image data
+        // console.log(imageData);
+        // Unhide image elements
+        largeImage.style.display = 'block';
+        // Show the captured photo
+        // The inline CSS rules are used to resize the image
+        largeImage.src = "data:image/jpeg;base64," + imageData;
+    }
+    // Called when a photo is successfully retrieved
+    function onPhotoURISuccess(imageURI) {
+        // Uncomment to view the image file URI 
+        // console.log(imageURI);
+        // Get image handle
+        var largeImage = document.getElementById('largeImage');
+        // Unhide image ele                       0ments
+        largeImage.style.display = 'block';
+        // Show the captured photo
+        // The inline CSS rules are used to resize the image
+        largeImage.src = imageURI;
+    }
+    // A button will call this function to retrieve photos from the album
+    function getPhoto(source) {
+        // Retrieve image file location from specified source
+        navigator.camera.getPicture(onPhotoURISuccess, onFail, {
+            quality: 50
+            , destinationType: destinationType.FILE_URI
+            , sourceType: source
+        });
+    }
+</script>
+<script type="text/javascript">
+    app.initialize();
+</script>
 </head>
 
 <body>
-    <div class="atualiza_section">...</div>
-    <div id='app'>
-        <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
-        <div class="hide" id="info_geral" data-pagina-atual=''></div>
-        <header>
-            <div class='title'>
-               <i class="fa fa-white fa-bars waves waves-cir pull-left" style="margin-top: 3px; margin-right: 15px; margin-left: 4px; font-size: 24px;"></i>
-               <span class="txt">Sobralense</span>
-               <!--<a href="#" id="BtnSair" class="pull-right">[sair]</a>-->
-               <i class="fa fa-white fa-search waves waves-cir pull-right" style="margin-top: 3px; margin-right: 4px !important; font-size: 24px;"></i>
-            </div>
-        </header>
-        <section class="pagina" id="inicio" data-load="n" data-previous='none' data-next='mensagens'></section>
-        <section class="pagina" id="mensagens" data-load="n" data-previous='inicio' data-next='explorar'></section>
-        <section class="pagina" id="explorar" data-load="n" data-previous='mensagens' data-next='noticias'></section>
-        <section class="pagina" id="noticias" data-load="n" data-previous='explorar' data-next='eventos'></section>
-        <section class="pagina" id="eventos" data-load="n" data-previous='noticias' data-next='lugares'></section>
-        <section class="pagina" id="lugares" data-load="n" data-previous='eventos' data-next='none'></section>
-        <section class="pagina" id="perfil" data-load="n" style="margin-top: 0px;"></section>
-        <div id="btn_postar_mais" class="pull-right btn_postar_mais waves ModalSobralenseAbrir" data-title="Nova publicação..."> + </div>
-        <footer> <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="fa fa-white fa-home"></i></a> <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="fa fa-white fa-map"></i></a> <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="fa fa-white fa-calendar-o"></i></a> <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="fa fa-white fa-info-circle"></i></a> <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="fa fa-white fa-map-marker"></i></a> </footer>
-        <div class="ModalSobralense" style="display: none;">
-            <div class="ModalSobralenseClose"><i class="fa fa-white fa-2x fa-arrow-left ModalSobralenseBtnClose"></i> <span></span></div>
-            <div class="ModalSobralenseContent"> teste </div>
-        </div>
+   <div data-role="page" id="home">
+    <div data-role="header" data-theme="b">
+        <h1> Make Your Photo App!</h1> </div>
+    <div data-role="content" id="conteudo">
+        <button onclick="capturePhoto();">Capture Photo</button>
+        <br>
+        <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Procurar Fotos</button> <img style="width:100%" id="largeImage" src="" />
+        <br>
+        <button id="btnsepia" class="ui-btn ui-btn-inline">Sépia</button>
+        <button id="btnblack" class="ui-btn ui-btn-inline">Preto e Branco</button>
+        <button id="btnoriginal" class="ui-btn ui-btn-inline">Original</button>
     </div>
+    <div data-role="footer" id="camera-footer" data-theme="b" data-position="fixed">
+        <a href="#" class="ui-btn ui-shadow ui-corner-all ui-icon-camera ui-btn-icon-notext"></a>
+    </div>
+</div>
 </body>
 
 </html>
