@@ -1,0 +1,47 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Sobralense - Mobile</title>
+    <link type='text/css' href='./vendor/font/roboto.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="./vendor/font-awesome-4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./lib/jquery.mobile-1.4.5.min.css">
+    <script src="./lib/jquery-2.2.4.min.js"></script>
+    <script src='./lib/jquery.mobile-1.4.5.min.js'></script>
+    <script src="./lib/jquery.touchSwipe.js"></script>
+    <script src='./vendor/waves/waves.min.js'></script>
+    <script src='./vendor/cropper/cropper.js'></script>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/waves/waves.min.css">
+    <link rel="stylesheet" href="./vendor/cropper/cropper.min.css">
+    <script src='./style/sobralense.js'></script>
+    <script>
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            $("#btncamera").click(function() {
+               navigator.camera.getPicture(onSucesso,onFalha, {
+                   quality: 50,
+                   destinationType: Camera.DestinationType.FILE_URI
+               }) 
+            });
+            function onSucesso(imageData) {
+                var image = document.getElementById("imagem");
+                image.src = "data:image/jpeg;base64," + imageData;
+            }
+            function onFalha(imageData) {
+                alert("Falha: " + imageData);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="atualiza_section">...</div>
+    <div id='app'>
+        <img id="imagem" style="width: 100%" />
+        <p><button id="btncamera">Abri camera</button></p>
+    </div>
+</body>
+
+</html>
