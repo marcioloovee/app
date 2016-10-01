@@ -20,7 +20,7 @@
   <preference name="android-permission" value="android.permission.CAMERA" />
   
   <feature name="Camera">
-    <param name="android-package" value="org.apache.cordova.camera" />
+    <param name="android-package" value="cordova-plugin-camera" />
   </feature>
 
   <name>Sobralense</name>
