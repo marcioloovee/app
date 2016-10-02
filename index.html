@@ -22,16 +22,17 @@
 </head>
 
 <body>
-    <div class="atualiza_section">...</div>
+    <div class="atualiza_section"><span><i class="fa fa-white fa-refresh fa-2x" aria-hidden="true"></i></span></div>
     <div id='app'>
         <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
-        <div class="hide" id="info_geral" data-pagina-atual=''></div>
+        <div class="hide" id="info_geral" data-pagina-atual='' data-id-ref=''></div>
         <header>
             <div class='title'>
                <i class="fa fa-white fa-bars waves waves-cir pull-left" style="margin-top: 3px; margin-right: 15px; margin-left: 4px; font-size: 24px;"></i>
                <span class="txt">Sobralense</span>
+               
 <!--               <a href="#" id="BtnSair" class="pull-right">[sair]</a>-->
-               <i class="fa fa-white fa-search waves waves-cir pull-right" style="margin-top: 3px; margin-right: 4px !important; font-size: 24px;"></i>
+               <i id="btn-buscar" class="hide fa fa-white fa-search waves waves-cir pull-right" style="margin-top: 3px; margin-right: 4px !important; font-size: 24px;"></i>
             </div>
         </header>
         <section class="pagina" id="inicio" data-load="n" data-previous='none' data-next='mensagens'></section>

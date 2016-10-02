@@ -11,11 +11,22 @@ function Ajax(url,data,type,selector) {
     async: false,
     type: type,
     context: selector,
+    beforeSend: function() {
+      $.mobile.loading( 'show', {
+      text: 'Carregando',
+      textVisible: false,
+      theme: 'a',
+      html: "<span class='alert alert-info'>Carregando</span>"
+    });
+    },
     success: function(data) {
       result = data;
     },
     error: function(data) {
       result = "erro_404";
+    },
+    complete: function() {
+      $.mobile.loading( 'hide');
     }
   });
   return result;
@@ -41,8 +52,12 @@ function VerificaAuth() {
 function Timeline(ult_post) {
   var token = localStorage.getItem("aute_token");
   var usuario = $("#hide_usuario").val();
-  var pagina = $("#hide_pagina").val();
-  var last = $("#hide_paginacao").val();
+  var pagina = $("#info_geral").attr("data-pagina-atual");
+  if (pagina === "inicio") {
+    var last = $("section#inicio #hide_paginacao").val();
+  } else if (pagina === "perfil") {
+    var last = $("section#perfil #hide_paginacao").val();
+  }
   var url = PATH_API+"timeline.php?token="+token+"&last="+ last + "&usuario=" + usuario + "&pagina=" + pagina + "&ult_post=" + ult_post;
   
   $.ajax({
@@ -126,7 +141,7 @@ function BoxComentar(id) {
 }
 
 function Explorar(busca) {
-  var token = localStorage.getItem("aute_token");
+  var token   = localStorage.getItem("aute_token");
   if (busca!=="") {
     var last = 1;
   } else {
@@ -135,12 +150,13 @@ function Explorar(busca) {
 	
 	var url = PATH_API+"explorar.php?token="+token+"&last="+last+"&busca="+busca;
 	var retorno = Ajax(url,"","GET",this);
+  console.log(retorno);
 	retorno = $.parseJSON(retorno);
 	var html = "";
 	var last;
 	if (retorno.length > 0) { 
 		$.each(retorno, function(p,k) {
-			html += "<div class='col-xs-4 explorar_item'><a href='#' data-a='navegar' data-src='perfil' data-id='"+k.id+"'>"+
+			html += "<div class='explorar_item'><a href='#' data-a='navegar' data-src='perfil' data-id='"+k.id+"'>"+
 			"<img src='"+k.img_perfil+"' class='img-responsive'><span class='nome'>"+k.nome+"</span>"+
 			"</a></div>";
 		});
@@ -212,8 +228,13 @@ $(document).on('ready', function() {
   $("header").swipe({
     swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData, currentDirection) {
       if (direction === "down") {
-        if (distance > 150) var dis = 150;
-        else var dis = distance;
+        var load = 'nao';
+        if (distance > 150) {
+          var dis = 150;
+          var load = 'sim';
+        } else {
+          var dis = distance;
+        }
         $(".atualiza_section").css("top",(-150 + dis));
       }
       
@@ -221,7 +242,12 @@ $(document).on('ready', function() {
         $(".atualiza_section").animate({
           top: "-150px"
         }, 300);
+        if (load === "sim") {
+          $(".atualiza_section span").html("<i class='fa fa-circle-o-notch fa-spin fa-3x fa-fw'></i><span class='sr-only'>Carregando...</span>");
+          window.location.href='index.html';
+        }
       }
+      
     },
     threshold:0,
     maxTimeThreshold: 100,
@@ -250,6 +276,7 @@ $(document).on('ready', function() {
   $(document).on("click","[data-a=navegar]", function() {
     var page 		= $(this).attr("data-src");
     var title 	= $(this).attr("data-title");
+    $("#info_geral").attr("data-pagina-atual",page);
     if (page !== "perfil") {
       $("section#perfil").html("");
     }
@@ -272,7 +299,7 @@ $(document).on('ready', function() {
       if (retorno === "erro_404") {
         $("section#"+page).html("<br><br><center>Página não encontrada!</center>");
       } else {
-        $("#info_geral").attr("data-pagina-atual",page);
+        
         $("section#"+page).html(retorno);
         $("section#"+page).attr("data-load","s");
       }
@@ -280,9 +307,15 @@ $(document).on('ready', function() {
       if (page === "inicio" || page === "perfil") {
         if (page === "perfil") {
           var id = $(this).attr("data-id");
+          $("#info_geral").attr("data-id-ref",id);
+          
           Perfil(id);
         }
         Timeline(0);
+      }
+      
+      if (page === "explorar") {
+        Explorar("");
       }
       
     }

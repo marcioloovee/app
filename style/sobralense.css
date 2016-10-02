@@ -85,10 +85,14 @@ section.pagina {
   position: absolute;
   top: -150px;
   height: 150px;
-  line-height: 145px;
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0,0,0,0.8);
   z-index: 2;
   text-align: center;
+}
+.atualiza_section span {
+  position: absolute;
+	bottom: 5px;
+  margin-bottom: 5px;
 }
 .box {
 	width: calc(100% - 12px);
@@ -244,6 +248,21 @@ section.pagina {
 }
 .tab-perfil .tab-item.active span {
   box-shadow: 1px 1px 4px #999;
+}
+.pagina_explorar .explorar_item {
+  float: left;
+  width: calc(25% - 4px);
+  margin: 2px;
+  padding: 0px;
+  position: relative;
+}
+.pagina_explorar .explorar_item .nome {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  color: #FFF;
+  text-shadow: 0px 1px 0px #000;
+  width: 12ch;
 }
 
 .box_postar { padding: 6px; }
