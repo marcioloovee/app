@@ -53,10 +53,9 @@
     function onSuccess(imageData) {
       $(".mensagem").hide();
       $(".foto").show();
-      alert(imageData);
       var $imageContainer = $('#image-container');
-      var src = "data:image/jpeg;base64," + imageData;
-      var image = $("<img/>");
+      var src = window.URL.createObjectURL("data:image/jpeg;base64," + imageData);
+      var $image = $('<img/>');
       $image.attr({src: src}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
