@@ -18,7 +18,7 @@
         <!--<label class="btn btn-default" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
           <input id="btn_selecionar_foto_" type="file" class="hide" name="image-upload" accept="image/jpeg" />
         </label>-->
-        <button onclick="AbreCamera();" class="btn btn-default" type="button"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO</button>
+        <button onclick="AbreCamera();" class="btn btn-default" type="button" id="btn_selecionar_foto"><i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO</button>
       </div>
       <footer class="center">
         <button class="btn btn-success" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
@@ -53,10 +53,11 @@
     function onSuccess(imageData) {
       $(".mensagem").hide();
       $(".foto").show();
-      
+      alert(imageData);
       var $imageContainer = $('#image-container');
+      var src = window.URL.createObjectURL(imageData);
       var image = $("<img/>");
-      $image.attr("src", imageData).load(function () {
+      $image.attr({src: src}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
 
@@ -92,7 +93,7 @@
       });
     }
     function onFail(msg) {
-      alert("Erro ao abrir camera: " + msg);
+      //alert("Erro ao abrir camera: " + msg);
     }
   }
   
