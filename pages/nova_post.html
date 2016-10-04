@@ -49,10 +49,7 @@
   function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      encodingType: Camera.EncodingType.JPEG,
-      mediaType: Camera.MediaType.PICTURE,
-      destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+      destinationType: Camera.DestinationType.FILE_URI
     });
     
     function onSuccess(imageData) {
