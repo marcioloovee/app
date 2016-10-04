@@ -65,7 +65,7 @@
       $("#image-upload").val(imageData.substr(imageData.lastIndexOf('/')+1));
       console.log("Imagem: " + imageData.substr(imageData.lastIndexOf('/')+1));
       
-      $image.attr({src: "data:image/jpeg;base64,"+imageData}).load(function () {
+      $image.attr({src: imageData}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
 
