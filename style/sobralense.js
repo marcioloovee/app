@@ -1,6 +1,6 @@
 /* global PATH_API */
-//localStorage.setItem("PATH_API", "http://www.sobralense.com.br/api/");
-localStorage.setItem("PATH_API","http://192.168.1.7/sobralense/api/");
+localStorage.setItem("PATH_API", "http://www.sobralense.com.br/api/");
+//localStorage.setItem("PATH_API","http://192.168.1.7/sobralense/api/");
 var PATH_API = localStorage.getItem("PATH_API");
 
 function Ajax(url,data,type,selector) {
