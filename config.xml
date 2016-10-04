@@ -11,7 +11,7 @@
   <content src="index.html" />
   
   <gap:plugin name="cordova-plugin-whitelist" spec="1.3.0" source="npm" />
-  <gap:plugin name="cordova-plugin-camera" spec="1.3.0" source="npm" />
+  <gap:plugin name="cordova-plugin-camera" source="npm" />
   <preference name="show-splash-screen-spinner" value="true" />
   <preference name="auto-hide-splash-screen" value="true" />
   <preference name="android-minSdkVersion" value="19" />
