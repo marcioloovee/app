@@ -49,7 +49,10 @@
   function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
     });
     
     function onSuccess(imageData) {
@@ -57,8 +60,11 @@
       $(".foto").show();
       var $imageContainer = $('#image-container');
       var $image = $('#image');
-      $("#image-upload").val(imageData);
-      console.log(imageData);
+      
+      
+      $("#image-upload").val(imageData.substr(imageData.lastIndexOf('/')+1));
+      console.log("Imagem: " + imageData.substr(imageData.lastIndexOf('/')+1));
+      
       $image.attr({src: "data:image/jpeg;base64,"+imageData}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
