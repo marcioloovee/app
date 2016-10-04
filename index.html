@@ -18,6 +18,63 @@
     <script src='./style/sobralense.js'></script>
     <link rel="stylesheet" href="./style/sobralense.css">
     <script>
+      (function(window) { 
+        'use strict'; 
+
+        var noback = { 
+
+          //globals 
+          version: '0.0.1', 
+          history_api : typeof history.pushState !== 'undefined', 
+
+          init:function(){ 
+            window.location.hash = '#no-back'; 
+            noback.configure(); 
+          }, 
+
+          hasChanged:function(){ 
+            if (window.location.hash == '#no-back' ){ 
+              window.location.hash = '#SOBRALENSE';
+            } 
+          }, 
+
+          checkCompat: function(){ 
+            if(window.addEventListener) { 
+              window.addEventListener("hashchange", noback.hasChanged, false); 
+            }else if (window.attachEvent) { 
+              window.attachEvent("onhashchange", noback.hasChanged); 
+            }else{ 
+              window.onhashchange = noback.hasChanged; 
+            } 
+          }, 
+
+          configure: function(){ 
+            if ( window.location.hash == '#no-back' ) { 
+              if ( this.history_api ){ 
+                history.pushState(null, '', '#SOBRALENSE'); 
+              }else{  
+                window.location.hash = '#SOBRALENSE';
+              } 
+            } 
+            noback.checkCompat(); 
+            noback.hasChanged(); 
+          } 
+
+          }; 
+
+          // AMD support 
+          if (typeof define === 'function' && define.amd) { 
+            define( function() { return noback; } ); 
+          }  
+          // For CommonJS and CommonJS-like 
+          else if (typeof module === 'object' && module.exports) { 
+            module.exports = noback; 
+          }  
+          else { 
+            window.noback = noback; 
+          } 
+          noback.init();
+        }(window)); 
     </script>
 </head>
 
@@ -46,7 +103,19 @@
         <footer> <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="fa fa-white fa-home"></i></a> <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="fa fa-white fa-map"></i></a> <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="fa fa-white fa-calendar-o"></i></a> <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="fa fa-white fa-info-circle"></i></a> <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="fa fa-white fa-map-marker"></i></a> </footer>
         <div class="ModalSobralense" style="display: none;">
             <div class="ModalSobralenseClose"><i class="fa fa-white fa-2x fa-arrow-left ModalSobralenseBtnClose"></i> <span></span></div>
-            <div class="ModalSobralenseContent"> teste </div>
+            <div class="ModalSobralenseContent">  </div>
+        </div>
+        
+        <div class="BoxLoading" style="display: none;">
+          <div class="BoxLoadingConteudo">
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+          </div>
         </div>
     </div>
 </body>

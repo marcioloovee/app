@@ -1,6 +1,6 @@
 /* global PATH_API */
-localStorage.setItem("PATH_API", "http://www.sobralense.com.br/api/");
-//localStorage.setItem("PATH_API","http://localhost/sobralense/api/");
+//localStorage.setItem("PATH_API", "http://www.sobralense.com.br/api/");
+localStorage.setItem("PATH_API","http://192.168.1.7/sobralense/api/");
 var PATH_API = localStorage.getItem("PATH_API");
 
 function Ajax(url,data,type,selector) {
@@ -11,22 +11,11 @@ function Ajax(url,data,type,selector) {
     async: false,
     type: type,
     context: selector,
-    beforeSend: function() {
-      $.mobile.loading( 'show', {
-      text: 'Carregando',
-      textVisible: false,
-      theme: 'a',
-      html: "<span class='alert alert-info'>Carregando</span>"
-    });
-    },
     success: function(data) {
       result = data;
     },
     error: function(data) {
       result = "erro_404";
-    },
-    complete: function() {
-      $.mobile.loading( 'hide');
     }
   });
   return result;
@@ -145,12 +134,11 @@ function Explorar(busca) {
   if (busca!=="") {
     var last = 1;
   } else {
-    var last = $("#hide_paginacao").val();
+    var last = $("section#explorar #hide_paginacao").val();
   }
 	
 	var url = PATH_API+"explorar.php?token="+token+"&last="+last+"&busca="+busca;
 	var retorno = Ajax(url,"","GET",this);
-  console.log(retorno);
 	retorno = $.parseJSON(retorno);
 	var html = "";
 	var last;
@@ -161,7 +149,7 @@ function Explorar(busca) {
 			"</a></div>";
 		});
 		var pag = parseFloat(last) + 1;
-		$("#hide_paginacao").val(pag);
+		$("section#explorar #hide_paginacao").val(pag);
 	} else {
 		$(".btn-carregar-mais").html("");
 	}
@@ -196,6 +184,32 @@ function Perfil(id) {
   
 }
 
+function Eventos(busca) {
+  var token   = localStorage.getItem("aute_token");
+  if (busca!=="") {
+    var last = 1;
+  } else {
+    var last = $("section#eventos #hide_paginacao").val();
+  }
+	
+	var url = PATH_API+"eventos.php?token="+token+"&last="+last;
+	var retorno = Ajax(url,"","GET",this);
+	retorno = $.parseJSON(retorno);
+	var html = "";
+	var last;
+	if (retorno.length > 0) { 
+		$.each(retorno, function(p,k) {
+			html += "<div class='box'>"+k.nome+"</div>";
+		});
+		var pag = parseFloat(last) + 1;
+		$("section#eventos #hide_paginacao").val(pag);
+	} else {
+		$(".btn-carregar-mais").html("");
+	}
+
+	$(".pagina_eventos .lista").append(html);
+}
+
 $(document).on('ready', function() {
   VerificaAuth();
   Waves.init();
@@ -221,6 +235,9 @@ $(document).on('ready', function() {
 		  }
 		  if (page === "explorar") {
 		    Explorar("");
+		  }
+		  if (page === "eventos") {
+		    Eventos("");
 		  }
 	  }
 	});
@@ -277,6 +294,11 @@ $(document).on('ready', function() {
     var page 		= $(this).attr("data-src");
     var title 	= $(this).attr("data-title");
     $("#info_geral").attr("data-pagina-atual",page);
+    $(".BoxLoading").fadeIn("fast");
+    
+    $("section.pagina").fadeOut();
+    $("section#"+page).fadeIn();
+    
     if (page !== "perfil") {
       $("section#perfil").html("");
     }
@@ -290,8 +312,7 @@ $(document).on('ready', function() {
     $("header .title span.txt").text(title);
     $("footer a").removeClass("active");
     $(this).addClass("active");
-    $("section.pagina").fadeOut();
-    $("section#"+page).fadeIn();
+    
     var data_load = $("section#"+page).attr("data-load");
     if (data_load === "n" || page==="perfil") {
       var retorno = Ajax("./pages/"+page+".html","","GET","");
@@ -318,8 +339,12 @@ $(document).on('ready', function() {
         Explorar("");
       }
       
+      if (page === "eventos") {
+        Eventos("");
+      }
+      
     }
-    
+    $(".BoxLoading").fadeOut("fast");
    
  });
  
@@ -466,35 +491,6 @@ $(document).on('ready', function() {
       $(".pagina_perfil .topo .opcoes #total_seguidores").html(re[1]);
     }
   });
-  
-  /*
-  $(document).on("click","#btn_postar",function () { //fazer postagem na timeline
-    var usuario = $("#hide_usuario").val();
-    var pagina = $("#hide_pagina").val();
-    var mensagem = $("#input_mensagem_postar").val();
-
-    if (!mensagem) {
-      $("#input_mensagem_postar").focus();
-      return false;
-    }
-
-    $.ajax({
-      url: PATH_API+"postar.php?mensagem="+mensagem+"&para="+usuario+"&pagina="+pagina,
-      async: true,
-      success: function(data) {
-        var k = $.parseJSON(data);
-        if (k.status === "success") {
-          $("#input_mensagem_postar").val("");
-          Timeline(k.id_post);
-
-        } else {
-          alert(k.log);
-        }
-      }
-    });
-    return false;
-  });
-  */
 
   $(document).on("keyup","#input_buscar", function(event) {
     var buscar = $(this).val();
@@ -503,7 +499,7 @@ $(document).on('ready', function() {
 
        Explorar(buscar);
      } else if (buscar.length === 0) {
-       Explorar();
+       Explorar("");
      }
   });
   

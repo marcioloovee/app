@@ -255,6 +255,8 @@ section.pagina {
   margin: 2px;
   padding: 0px;
   position: relative;
+  border: 1px solid #EEE;
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 }
 .pagina_explorar .explorar_item .nome {
   position: absolute;
@@ -275,3 +277,58 @@ section.pagina {
 .ModalSobralenseClose { width: 100%; height: 45px; z-index: 10003; position: absolute; }
 .ModalSobralenseClose i { float: left; margin: 10px 0px 0px 15px; cursor: pointer; }
 .ModalSobralenseClose span { line-height: 45px; font-size: 20px; padding-left: 15px; }
+.BoxLoading { background-color: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
+.BoxLoadingConteudo { font-size: 24px; color: #FFF; text-align: center; width: 100%; margin-top: 160px; position: relative; }
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #FFF;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}

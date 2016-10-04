@@ -39,7 +39,61 @@
   </form>
 </div>
 <script type="text/javascript">
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+    console.log("Device carregado!");
+  }
+  function AbreCamera() {
+    navigator.camera.getPicture(onSuccess, onFail, {
+      quality: 50,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: PHOTOLIBRARY
+    });
+    
+    function onSuccess(imageData) {
+      $(".mensagem").hide();
+      $(".foto").show();
+      
+      var image = $("<img/>");
+      $image.attr({src: imageData}).load(function () {
+        $("#btn_salvar").show();
+        $("#formupload textarea").show();
 
+        var nome_img = $("#btn_selecionar_foto_").val();
+        if (nome_img) {
+          $(".btn_upload").hide();
+          if (nome_img.length > 30) {
+            var nome_img2 = "";
+            for (var i=1; i<=30;i++,nome_img2+=nome_img[i]);
+            nome_img2 += "...";
+          } else {
+            var nome_img2 = nome_img;
+          }
+
+          $("#imagem_escolhida .nome").text(nome_img2);
+          $("#imagem_escolhida").show();
+        }
+
+        $imageContainer.html($image);
+        $image.cropper({
+          viewMode: 1,
+          guides: false,
+          zoomable: true,
+          aspectRatio: NaN,
+          preview: ".img-preview",
+          crop: function (e) {
+            $('#x').val(e.x);
+            $('#y').val(e.y);
+            $('#w').val(e.width);
+            $('#h').val(e.height);
+          }
+        });
+      });
+    }
+    function onFail(msg) {
+      alert("Erro ao abrir camera: " + msg);
+    }
+  }
   var $imageContainer = $('#image-container');
   $("#btn_selecionar_foto_").change(function() {
     $(".mensagem").hide();
@@ -48,40 +102,7 @@
 
     var $image = $('<img/>');
 
-    $image.attr({src: src}).load(function () {
-      $("#btn_salvar").show();
-      $("#formupload textarea").show();
-      
-      var nome_img = $("#btn_selecionar_foto_").val();
-      if (nome_img) {
-        $(".btn_upload").hide();
-        if (nome_img.length > 30) {
-          var nome_img2 = "";
-          for (var i=1; i<=30;i++,nome_img2+=nome_img[i]);
-          nome_img2 += "...";
-        } else {
-          var nome_img2 = nome_img;
-        }
-        
-        $("#imagem_escolhida .nome").text(nome_img2);
-        $("#imagem_escolhida").show();
-      }
-
-      $imageContainer.html($image);
-      $image.cropper({
-        viewMode: 1,
-        guides: false,
-        zoomable: true,
-        aspectRatio: NaN,
-        preview: ".img-preview",
-        crop: function (e) {
-          $('#x').val(e.x);
-          $('#y').val(e.y);
-          $('#w').val(e.width);
-          $('#h').val(e.height);
-        }
-      });
-    });
+   
   });
 
   $("#formupload").submit(function() {
