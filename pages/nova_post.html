@@ -32,7 +32,7 @@
       <input type="hidden" name="x" id="x" />
       <input type="hidden" name="w" id="w" />
       <input type="hidden" name="h" id="h" />
-      <input type="file" class="hide" name="image-upload" id="image-upload" />
+      <input type="hidden" name="image-upload" id="image-upload" />
       <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important;"></div>
       <img src="" id="image">
       <footer class="center">
@@ -58,6 +58,7 @@
       var $imageContainer = $('#image-container');
       var $image = $('#image');
       $("#image-upload").val(imageData);
+      console.log(imageData);
       $image.attr({src: imageData}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
