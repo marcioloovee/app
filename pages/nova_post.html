@@ -33,6 +33,7 @@
       <input type="hidden" name="w" id="w" />
       <input type="hidden" name="h" id="h" />
       <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important;"></div>
+      <img src="" id="image">
       <footer class="center">
         <button class="btn btn-info" id="voltar" type="button"><i class="fa fa-white fa-check" aria-hidden="true"></i> CONTINUAR</button>
       </footer>
@@ -47,16 +48,16 @@
   function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL
+      destinationType: Camera.DestinationType.FILE_URI
     });
     
     function onSuccess(imageData) {
       $(".mensagem").hide();
       $(".foto").show();
       var $imageContainer = $('#image-container');
-      var src = window.URL.createObjectURL(this.files[0]);
-      var $image = $('<img/>');
-      $image.attr({src: src}).load(function () {
+      //var src = window.URL.createObjectURL(this.files[0]);
+      var $image = $('#image');
+      $image.attr({src: imageData}).load(function () {
         $("#btn_salvar").show();
         $("#formupload textarea").show();
 
