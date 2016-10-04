@@ -59,7 +59,7 @@
       var $image = $('#image');
       
       
-      $("#image-upload").val(imageData.substr(imageData.lastIndexOf('/')+1));
+      $("#image-upload").val("data:image/jpeg;base64," + imageData);
       console.log("Imagem: " + imageData.substr(imageData.lastIndexOf('/')+1));
       
       $image.attr({src: "data:image/jpeg;base64," + imageData}).load(function () {
