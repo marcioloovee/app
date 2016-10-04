@@ -55,6 +55,7 @@
       $(".mensagem").hide();
       $(".foto").show();
       
+      var $imageContainer = $('#image-container');
       var image = $("<img/>");
       $image.attr({src: imageData}).load(function () {
         $("#btn_salvar").show();
@@ -95,15 +96,10 @@
       alert("Erro ao abrir camera: " + msg);
     }
   }
-  var $imageContainer = $('#image-container');
+  
   $("#btn_selecionar_foto_").change(function() {
     $(".mensagem").hide();
     $(".foto").show();
-    var src = window.URL.createObjectURL(this.files[0]);
-
-    var $image = $('<img/>');
-
-   
   });
 
   $("#formupload").submit(function() {
