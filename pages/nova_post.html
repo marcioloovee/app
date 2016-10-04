@@ -54,7 +54,7 @@
       $(".mensagem").hide();
       $(".foto").show();
       var $imageContainer = $('#image-container');
-      var src = window.URL.createObjectURL("data:image/jpeg;base64," + imageData);
+      var src = window.URL.createObjectURL(this.files[0]);
       var $image = $('<img/>');
       $image.attr({src: src}).load(function () {
         $("#btn_salvar").show();
