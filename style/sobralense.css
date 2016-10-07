@@ -102,6 +102,7 @@ section.pagina {
   background: #FFF;
   margin: 6px 6px;
   border-radius: 3px;
+  position: relative;
 }
 .box_postar_timeline_foto {
 	width: 50px;
@@ -265,6 +266,23 @@ section.pagina {
   color: #FFF;
   text-shadow: 0px 1px 0px #000;
   width: 12ch;
+}
+
+.pagina_eventos .box {
+  padding: 0px;
+}
+
+.detalhes_evento { margin-bottom: 105px; }
+.detalhes_evento .image {
+  width: 100%;
+}
+.detalhes_evento .titulo {
+  font-size: 140%;
+  padding: 20px 20px 0px 20px; 
+}
+.detalhes_evento .descricao {
+  text-align: justify;
+  padding: 20px;
 }
 
 .box_postar { padding: 6px; }

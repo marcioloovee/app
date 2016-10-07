@@ -68,7 +68,7 @@
         $("#formupload textarea").show();
 
         var nome_img = $("#btn_selecionar_foto_").val();
-        if (nome_img) {
+        if (imageData) {
           $(".btn_upload").hide();
           if (nome_img.length > 30) {
             var nome_img2 = "";
@@ -78,7 +78,7 @@
             var nome_img2 = nome_img;
           }
 
-          $("#imagem_escolhida .nome").text(nome_img2);
+          $("#imagem_escolhida .nome").text("Imagem selecionada!");
           $("#imagem_escolhida").show();
         }
 
