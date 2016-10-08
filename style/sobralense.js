@@ -240,7 +240,7 @@ function Noticias(busca) {
     $.each(retorno, function(p, k) {
       html += "<a class='ModalSobralenseAbrir' data-title='Notícia...' data-a='acao' data-type='info_noticia' data-id='" + k.id + "'><div class='box'>" +
       "<div class='col-xs-3' style='margin: 0; padding: 0;'><img src='"+k.img+"' class='img-responsive' /></div>" +
-      "<div class='col-xs-9' style='padding: 5px;'><b>"+k.titulo+"</b><br>"+k.subtitulo+"<br><small><i>"+DataEvento(k.data_hora)+"</i></small></div><span class='pull-right' style='position: absolute; bottom: 5px; right: 5px;'><i class='fa fa-comment'></i> "+k.total_comentarios+"</span>" +
+      "<div class='col-xs-9' style='padding: 5px;'><b>"+k.titulo+"</b><br>"+k.subtitulo+"<br><small><i>"+DataEvento(k.data_hora)+"</i></small></div><span class='pull-right' style='position: absolute; bottom: 5px; right: 5px;'><i class='fa fa-comment'></i> <span class='total_comentario_noticia_"+k.id+"'>"+k.total_comentarios+"</span></span>" +
       "</div></a>";
     });
     var pag = parseFloat(last) + 1;
@@ -250,6 +250,65 @@ function Noticias(busca) {
   }
 
   $(".pagina_noticias .lista").append(html);
+}
+function ComentariosNoticia(id,id_com) {
+  var token = localStorage.getItem("aute_token");
+  var url = PATH_API + "noticias_comentarios.php?token=" + token + "&id=" + id + "&id_com=" + id_com;
+  var retorno2 = Ajax(url, "", "GET", this);
+  retorno = $.parseJSON(retorno2);
+  if (retorno) {
+    var html = "";
+    $.each(retorno, function(p, k) {
+      html += "<div class='box' id='box_comentario_" + k.id + "'><div class='timeline_header'>" +
+              "<a href='#' data-a='navegar' data-src='perfil' data-id='" + k.id_usuario + "'><img src='" + k.img_perfil + "' height='40' width='40' class='pull-left img-circle' /></a>" +
+              "<div class='timeline_title'>" +
+              "<span><a href='#' data-a='navegar' data-src='perfil' data-id='" + k.id_usuario + "'>" + k.usuario + "</a></span>" +
+              "<small class='pull-right'>" + k.data_atras + "</small>" +
+              "</div>" +
+              "</div>" +
+              "<div class='timeline_content'>" +
+              "<div class='text'>" +
+              k.mensagem +
+              "</div>";
+              if (k.meu === "s") html += "<a class='btn' data-a='acao' data-type='remover_comentario_noticia' data-id='" + k.id + "' data-src='comentario_noticia' data-content='#box_post_" + k.id + "'><i class='fa fa-close'></i>&nbsp;</a>";
+              html += "</div></div>";
+    });
+    if (id_com > 0) {
+      $(".comentarios_noticia").append(html);
+    } else {
+      $(".comentarios_noticia").html(html);
+    }
+    
+  }
+}
+
+function Lugares(busca) {
+  var token = localStorage.getItem("aute_token");
+  if (busca !== "") {
+    var last = 1;
+  } else {
+    var last = $("section#lugares #hide_paginacao").val();
+  }
+
+  var url = PATH_API + "lugares.php?token=" + token + "&last=" + last;
+  var retorno2 = Ajax(url, "", "GET", this);
+  retorno = $.parseJSON(retorno2);
+  var html = "";
+  var last;
+  if (retorno) {
+    $.each(retorno, function(p, k) {
+      html += "<a class='ModalSobralenseAbrir' data-title='Detalhes...' data-a='acao' data-type='info_lugar' data-id='" + k.id + "'><div class='box'>" +
+      "<div class='col-xs-4' style='margin: 0; padding: 0;'><img src='"+k.img+"' class='img-responsive' /></div>" +
+      "<div class='col-xs-8' style='padding: 5px;'><b>"+k.nome+"</b><br>Endereço: "+k.endereco+"</div>" +
+      "</div></a>";
+    });
+    var pag = parseFloat(last) + 1;
+    $("section#lugares #hide_paginacao").val(pag);
+  } else {
+    $(".btn-carregar-mais").html("");
+  }
+
+  $(".pagina_lugares .lista").append(html);
 }
 
 $(document).on('ready', function() {
@@ -387,6 +446,10 @@ $(document).on('ready', function() {
 
       if (page === "noticias") {
         Noticias("");
+      }
+
+      if (page === "lugares") {
+        Lugares("");
       }
 
     }
@@ -584,12 +647,39 @@ $(document).on('ready', function() {
       var dado = Ajax(PATH_API + "detalhes_noticia.php?token="+token+"&id="+id,"","GET",this);
       var k = $.parseJSON(dado);
       html = html.replace("{{id}}",k.id);
+      html = html.replace("{{id2}}",k.id);
+      html = html.replace("{{id3}}",k.id);
       html = html.replace("{{imagem}}",k.img);
       html = html.replace("{{titulo}}",k.titulo);
       html = html.replace("{{subtitulo}}",k.subtitulo);
       html = html.replace("{{conteudo}}",k.conteudo);
       html = html.replace("{{data}}",DataEvento(k.data_hora));
       html = html.replace("{{total_comentarios}}",k.total_comentarios);
+      $(".ModalSobralenseContent").html(html);
+      //ComentariosNoticia(id,0);
+    }
+
+    if (acao === "comentar_noticia") {
+      var mensagem = $("#ComentarioNoticia").val();
+      $("#ComentarioNoticia").val("");
+      var url = PATH_API + "comentar_noticia.php?token=" + token + "&mensagem=" + mensagem + "&id=" + id;
+      var retorno = Ajax(url, "", "GET", this);
+      var k = $.parseJSON(retorno);
+      ComentariosNoticia(id,k.id_com); //box_comentario_id_com
+      $(".detalhes_evento").scrollTop = $(".detalhes_evento").scrollHeight;
+      $("total_comentario_noticia_" + id).text(k.total_comentarios);
+      return false;
+    }
+
+    if (acao === "info_lugar") {
+      var html = Ajax("./pages/detalhes_lugar.html","","GET",this);
+      var dado = Ajax(PATH_API + "detalhes_lugar.php?token="+token+"&id="+id,"","GET",this);
+      var k = $.parseJSON(dado);
+      html = html.replace("{{id}}",k.id);
+      html = html.replace("{{imagem}}",k.img);
+      html = html.replace("{{titulo}}",k.nome);
+      html = html.replace("{{endereco}}",k.endereco);
+      html = html.replace("{{descricao}}",k.descricao);
       $(".ModalSobralenseContent").html(html);
     }
   });

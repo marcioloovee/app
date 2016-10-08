@@ -1,10 +1,24 @@
 <div class="detalhes_evento">
 	<div class="titulo">
-		<b>{{titulo}}</b><br>{{subtitulo}}
+		<b style="font-size: 120%;">{{titulo}}</b><br>{{subtitulo}}
 	</div>
 	<div class="descricao">
-		<img src="{{imagem}}" class='img-responsive img-thumbnail' style="max-width: 100%; vertical-align: middle;"> {{conteudo}}
+		<center><img src="{{imagem}}" class='img-responsive img-thumbnail' style="max-width: 320px; margin: 0px 20px 10px 0px;"></center>
+		<br>{{conteudo}}
 		<hr>
 		Data: {{data}}
+		<hr>
+		<h3>Comentários (<span class="total_comentario_noticia_{{id}}">{{total_comentarios}}</span>)</h3>
+		<div class="comentarios_noticia">
+			<center><a href="#" class="btn btn-info" onclick="ComentariosNoticia({{id3}},0);">mostrar comentários</a></center>
+		</div>
 	</div>
 </div>
+<footer class="comentar_noticia">
+	<div class="col-xs-10">
+		<textarea id="ComentarioNoticia" style="width: 100%; height: 70px; background: inherit; border: 0px; padding: 5px; resize: none" placeholder="Deixe seu comentário..."></textarea>
+	</div>
+	<div data-a='acao' data-type='comentar_noticia' data-id='{{id2}}' class="col-xs-2 BtnComentarNoticia waves waves-cir btn btn-success" style="border-radius: 0px; height: 70px; line-height: 70px; padding: 0 6px;">
+		<i class="fa fa-send fa-white"></i>&nbsp;
+	</div>
+</footer>

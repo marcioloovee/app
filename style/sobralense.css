@@ -285,6 +285,12 @@ section.pagina {
   padding: 20px;
 }
 
+.comentar_noticia {
+  height: 70px;
+  font-size: 14px;
+  background: #EEE;
+}
+
 .box_postar { padding: 6px; }
 .box_postar textarea { width: 100%; height: calc(100% - 200px); resize: none; border: 1px solid #EAEAEA; margin-top: 10px; font-size: 16px; padding: 10px; }
 
