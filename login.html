@@ -168,7 +168,7 @@
         $("#reauth-email").html("");
         $.ajax({
           type: "GET",
-          url: "http://www.sobralense.com.br/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
+          url: "http://localhost/sobralense/api/autenticar.php?device="+device+"&login="+login+"&senha="+senha,
           success: function(data) {
             var result = $.parseJSON(data);
             if (result.status === "success") {

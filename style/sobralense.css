@@ -12,14 +12,14 @@ Cor5: #FAB523
 */
 * { margin: 0; padding: 0; outline: none !important; }
 body {
-	font-family: 'Roboto', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif !important;
+	font-family: 'Lato', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif !important;
 	font-size: 12px;
 	color: #FFF7EB;
 	margin: 0px;
   background: #EAE8CC;
 }
-#app { max-width: 400px !important; margin: 0 auto;}
-a { font-weight: 500; }
+#app { width: 100%; min-width: 280px !important; max-width: 400px !important; margin: 0 auto; position: absolute;}
+a { font-weight: 700; }
 a, a:hover, a:active {
   text-decoration: none;
   color: inherit;
@@ -32,7 +32,7 @@ a, a:hover, a:active {
 .btn-raised { background-color: inherit !important; }
 .btn-carregar-mais { padding-top: 15px; }
 i.waves-cir { border-radius: 50%; padding: 8px; cursor: pointer; }
-header {
+.header {
   height: 50px;
   line-height: 50px;
   background: #2C9DB7;
@@ -47,6 +47,8 @@ header {
   box-shadow: 0px 2px 2px rgba(0,0,0,0.2);
   border-radius: 3px;
   font-weight: 400;
+
+  width: 100%; top: 0; left: 0; border-radius: 0px;
 }
 footer {
   background: #2C9DB7;
@@ -99,7 +101,7 @@ section.pagina {
 	border-bottom: 1px solid #EBEBEB;
   overflow: auto;
   padding-top: 10px;
-  background: #FFF;
+  background: rgba(255,255,255, 0.7);
   margin: 6px 6px;
   border-radius: 3px;
   position: relative;
@@ -295,6 +297,35 @@ section.pagina {
 .box_postar textarea { width: 100%; height: calc(100% - 200px); resize: none; border: 1px solid #EAEAEA; margin-top: 10px; font-size: 16px; padding: 10px; }
 
 
+.pagina_mensagens ul {
+  padding: 0px 20px;
+  height: 100%;
+  list-style: none;
+}
+.pagina_mensagens ul li {
+  background: rgba(255,255,255, 0.7);
+  margin-bottom: 10px;
+  padding: 5px;
+  overflow: auto;
+  border-radius: 3px;
+}
+.pagina_mensagens ul li img {
+  float: left;
+  margin-right: 10px;
+  width: 55px;
+  height: 55px;
+  background-color: #FFF;
+}
+.pagina_mensagens ul li .item {
+  padding-top: 10px;
+}
+.img-thumbnail.online {
+  background-color: #86BB71;;
+}
+.img-thumbnail.offline {
+  background-color: #E38968;;
+}
+
 
 .ModalSobralense { background-color: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
 .ModalSobralenseContent { background-color: #FFF; color: #3D2500; position: absolute; width: 100%; height: 100%; top: 45; left: 0; z-index: 10001; overflow: auto; }
@@ -304,6 +335,49 @@ section.pagina {
 .BoxLoading { background-color: rgba(0,0,0,0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
 .BoxLoadingConteudo { font-size: 24px; color: #FFF; text-align: center; width: 100%; margin-top: 160px; position: relative; }
 
+
+.MenuEsquerdo {
+  width: 80%;
+  height: calc(100% - 100px);
+  position: fixed;
+  background-color: #333;
+  top: 50px;
+  left: -80%;
+}
+.MenuEsquerdo .meuperfil #nome { font-size: 22px; padding-left: 10px; }
+.MenuEsquerdo .item {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  color: #FFF;
+  padding-left: 10px;
+  border-top: 1px solid #444;
+  font-size: 14px;
+}
+.MenuEsquerdo .item a.active {
+  color: #FAB523;
+}
+.MenuEsquerdo .item i { margin-right: 15px; top: 2px; }
+.item_msg { overflow: auto; padding: 0px 10px; margin-bottom: 5px; }
+.item_msg_eu {
+  float: right; padding: 7px; text-align: right; background: #91DA91; color: #135813; margin: 5px; border-radius: 10px 10px 0px 10px; font-size: 12px; max-width: 80% !important; word-wrap: break-word;
+}
+.item_msg_para {
+  float: left; padding: 7px; text-align: left; background: #A0E4EF; color: #1C3948; margin: 5px; border-radius: 0px 10px 10px 10px; font-size: 12px; max-width: calc(80% - 40px) !important; word-wrap: break-word;
+}
+.item_msg_hora {
+  overflow: auto;
+  font-size: 9px;
+  color: #E0DCDC;
+  padding-top: 10px;
+}
+.item_msg_img {
+  float: left;
+  margin-top: 5px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
 .spinner {
   margin: 100px auto;
   width: 50px;

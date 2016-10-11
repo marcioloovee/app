@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <title>Sobralense - Mobile</title>
-    <link type='text/css' href='./vendor/font/roboto.css' rel='stylesheet'>
+    <link type='text/css' href='./vendor/font-lato/fonte.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="./vendor/font-awesome-4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="./lib/jquery.mobile-1.4.5.min.css">
     <script src='./phonegap.js'></script>
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="./lib/bootstrap.min.css">
     <link rel="stylesheet" href="./vendor/waves/waves.min.css">
     <link rel="stylesheet" href="./vendor/cropper/cropper.min.css">
+
+    <link rel="stylesheet" href="./vendor/ionicons-2.0.1/css/ionicons.min.css">
     <script src='./style/sobralense.js'></script>
     <link rel="stylesheet" href="./style/sobralense.css">
     <script>
@@ -79,45 +81,63 @@
     </script>
 </head>
 
-<body>
+<body onload="VerificaAuth();">
     <div class="atualiza_section"><span><i class="fa fa-white fa-refresh fa-2x" aria-hidden="true"></i></span></div>
     <div id='app'>
-        <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
-        <div class="hide" id="info_geral" data-pagina-atual='' data-id-ref=''></div>
-        <header>
-            <div class='title'>
-               <i class="fa fa-white fa-bars waves waves-cir pull-left" style="margin-top: 3px; margin-right: 15px; margin-left: 4px; font-size: 24px;"></i>
-               <span class="txt">Sobralense</span>
-               
-<!--               <a href="#" id="BtnSair" class="pull-right">[sair]</a>-->
-               <i id="btn-buscar" class="hide fa fa-white fa-search waves waves-cir pull-right" style="margin-top: 3px; margin-right: 4px !important; font-size: 24px;"></i>
-            </div>
-        </header>
-        <section class="pagina" id="inicio" data-load="n" data-previous='none' data-next='mensagens'></section>
-        <section class="pagina" id="mensagens" data-load="n" data-previous='inicio' data-next='explorar'></section>
-        <section class="pagina" id="explorar" data-load="n" data-previous='mensagens' data-next='noticias'></section>
-        <section class="pagina" id="noticias" data-load="n" data-previous='explorar' data-next='eventos'></section>
-        <section class="pagina" id="eventos" data-load="n" data-previous='noticias' data-next='lugares'></section>
-        <section class="pagina" id="lugares" data-load="n" data-previous='eventos' data-next='none'></section>
-        <section class="pagina" id="perfil" data-load="n" style="margin-top: 0px;"></section>
-        <div id="btn_postar_mais" class="pull-right btn_postar_mais waves ModalSobralenseAbrir" data-title="Nova publicação..."> + </div>
-        <footer> <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="fa fa-white fa-home"></i></a> <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="fa fa-white fa-map"></i></a> <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="fa fa-white fa-calendar-o"></i></a> <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="fa fa-white fa-info-circle"></i></a> <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="fa fa-white fa-map-marker"></i></a> </footer>
-        <div class="ModalSobralense" style="display: none;">
-            <div class="ModalSobralenseClose"><i class="fa fa-white fa-2x fa-arrow-left ModalSobralenseBtnClose"></i> <span></span></div>
-            <div class="ModalSobralenseContent">  </div>
-        </div>
-        
-        <div class="BoxLoading" style="display: none;">
-          <div class="BoxLoadingConteudo">
-            <div class="spinner">
-              <div class="rect1"></div>
-              <div class="rect2"></div>
-              <div class="rect3"></div>
-              <div class="rect4"></div>
-              <div class="rect5"></div>
-            </div>
+      <div class="BoxLoading">
+        <div class="BoxLoadingConteudo">
+          <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
           </div>
         </div>
+      </div>
+
+      <div class="hide" id="info_usuario" data-usuario-usuario='' data-usuario-code='' data-usuario-img-perfil=''></div>
+      <div class="hide" id="info_geral" data-pagina-atual='' data-id-ref=''></div>
+
+      <div class="header">
+        <i id="AbreMenuEsquerdo" data-status="none" class="ion-navicon waves waves-cir pull-left" style="margin-top: 3px; margin-right: 15px; margin-left: 4px; font-size: 24px;"></i>
+        <div class='title'>
+          <span class="txt">Sobralense</span>
+        </div>
+        <i id="BtnSair" onclick="Sair();" class="ion-ios-close-outline waves waves-cir pull-right" style="top: 3px; right: 4px !important; font-size: 24px; position: absolute"></i>
+      </div>
+      <section class="pagina" id="inicio" data-load="n" data-previous='none' data-next='mensagens'></section>
+      <section class="pagina" id="mensagens" data-load="n" data-previous='inicio' data-next='explorar'></section>
+      <section class="pagina" id="explorar" data-load="n" data-previous='mensagens' data-next='noticias'></section>
+      <section class="pagina" id="noticias" data-load="n" data-previous='explorar' data-next='eventos'></section>
+      <section class="pagina" id="eventos" data-load="n" data-previous='noticias' data-next='lugares'></section>
+      <section class="pagina" id="lugares" data-load="n" data-previous='eventos' data-next='none'></section>
+      <section class="pagina" id="perfil" data-load="n" style="margin-top: 0px;"></section>
+      <section class="pagina" id="chat" data-load="n"></section>
+      <section class="pagina" id="configuracoes" data-load="n"></section>
+      <div id="btn_postar_mais" class="pull-right btn_postar_mais waves ModalSobralenseAbrir" data-title="Nova publicação..."> + </div>
+      <footer>
+        <a href="#" data-a="navegar" data-src="inicio" data-title='Sobralense'><i class="icon ion-ios-home fa-2x"></i></a>
+        <a href="#" data-a="navegar" data-src="explorar" data-title='Explorar'><i class="ion-ios-navigate fa-2x"></i></a>
+        <a href="#" data-a="navegar" data-src="eventos" data-title='Eventos'><i class="ion-ios-calendar fa-2x"></i></a>
+        <a href="#" data-a="navegar" data-src="noticias" data-title='Notícias'><i class="ion-ios-information fa-2x"></i></a>
+        <a href="#" data-a="navegar" data-src="lugares" data-title='Lugares'><i class="ion-ios-location fa-2x"></i></a>
+      </footer>
+      <div class="ModalSobralense" style="display: none;">
+          <div class="ModalSobralenseClose"><i class="fa fa-white fa-2x fa-arrow-left ModalSobralenseBtnClose"></i> <span></span></div>
+          <div class="ModalSobralenseContent">  </div>
+      </div>
+    </div>
+
+    <div class="MenuEsquerdo">
+      <div class="meuperfil" style="padding: 5px;">
+        <img src='' id="img_perfil" width="55" height="55" class="img-circle img-thumbnail"> <span id="nome"></span>
+      </div>
+      <div class="item"><a href="#" class="active" data-a="navegar" data-src="inicio" data-title="Sobralense"><i class="icon ion-ios-home-outline fa-2x"></i> Início</a></div>
+      <div class="item"><a href="#" data-a="navegar" data-src="mensagens" data-title="Mensagens"><i class="ion-ios-chatboxes-outline fa-2x"></i> Mensagens</a></div>
+      <div class="item"><a href="#" data-a="navegar" data-src="chat" data-title="Chat aberto"><i class="ion-ios-people-outline fa-2x"></i> Chat aberto</a></div>
+      <div class="item"><a href="#" data-a="navegar" data-src="configuracoes" data-title="configuracoes"><i class="ion-ios-gear-outline fa-2x"></i> Configurações</a></div>
+      <div class="item"><a href="#" onclick="Sair();"><i class="ion-ios-close-outline fa-2x"></i> Sair</a></div>
     </div>
 </body>
 

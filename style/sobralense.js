@@ -1,6 +1,6 @@
 /* global PATH_API */
 localStorage.setItem("PATH_API", "http://www.sobralense.com.br/api/");
-//localStorage.setItem("PATH_API", "http://192.168.1.7/sobralense/api/");
+//localStorage.setItem("PATH_API", "http://localhost/sobralense/api/");
 var PATH_API = localStorage.getItem("PATH_API");
 
 function Ajax(url, data, type, selector) {
@@ -28,16 +28,22 @@ function VerificaAuth() {
   var d = localStorage.getItem("aute_usuario");
   var e = localStorage.getItem("aute_token");
   var f = localStorage.getItem("aute_img_perfil");
+  var g = localStorage.getItem("aute_nome");
   if (a && b && c && d && e) {
     $("#info_usuario").attr("data-usuario-usuario", d);
     $("#info_usuario").attr("data-usuario-code", b);
     $("#info_usuario").attr("data-usuario-img-perfil", f);
-    $("#info_usuario").attr("data-usuario-usuario", d);
+    $("#info_usuario").attr("data-usuario-nome", g);
   } else {
+    window.stop();
     document.location = './login.html';
+    //
   }
 }
-
+function Sair() {
+  localStorage.clear();
+  VerificaAuth();
+}
 function Timeline(ult_post) {
   var token = localStorage.getItem("aute_token");
   var usuario = $("#hide_usuario").val();
@@ -175,6 +181,8 @@ function Perfil(id) {
   $(".pagina_perfil .topo .titulo").html(k.nome + "<br><small>@" + k.usuario + " | " + k.bairro + " | " + k.sexo + " | " + k.idade + " anos</small>");
   $(".pagina_perfil .topo .opcoes #total_seguidores").html(k.total_seguidores);
   $(".pagina_perfil .topo .opcoes #total_seguindo").html(k.total_seguindo);
+  $(".pagina_perfil .topo .ModalSobralenseAbrir").attr("data-title",k.nome);
+  $(".pagina_perfil .topo .ModalSobralenseAbrir").attr("data-id",id);
   if (eu !== k.id) {
     $(".pagina_perfil .topo .opcoes2").show();
     $(".pagina_perfil .topo .opcoes2 .btn-seguir").attr("data-id", k.id);
@@ -311,6 +319,41 @@ function Lugares(busca) {
   $(".pagina_lugares .lista").append(html);
 }
 
+function Mensagens(busca) {
+  var token = localStorage.getItem("aute_token");
+  if (busca !== "") {
+    var last = 1;
+  } else {
+    var last = $("section#mensagens #hide_paginacao").val();
+  }
+
+  var url = PATH_API + "mensagens.php?token=" + token + "&last=" + last;
+  var retorno2 = Ajax(url, "", "GET", this);
+  retorno = $.parseJSON(retorno2);
+  var html = "";
+  var last;
+  if (retorno) {
+    $.each(retorno, function(p, k) {
+      html += "<li id='item_lista_contato'>" +
+                "<a href='#' class='ModalSobralenseAbrir' data-a='acao' data-type='abre_conversa' data-title='"+k.nome+"' data-id='"+k.id_usuario+"'>" +
+                  "<img src='"+k.img+"' class='img-circle img-thumbnail "+k.status+"'>" +
+                  "<div class='item'>" +
+                    "<div class='nome'>" +
+                      "<b>"+k.nome+"</b>" +
+                    "</div>" +
+                    "<div class='status' style='font-weight: 500;'>" +
+                      ""+k.status2+"" +
+                    "</div></div></a></li>";
+    });
+    var pag = parseFloat(last) + 1;
+    $("section#mensagens #hide_paginacao").val(pag);
+  } else {
+    $(".btn-carregar-mais").html("");
+  }
+
+  $(".pagina_mensagens .lista").append(html);
+}
+
 $(document).on('ready', function() {
   VerificaAuth();
   Waves.init();
@@ -318,6 +361,7 @@ $(document).on('ready', function() {
 
   $("section.pagina").hide();
 
+  $(".BoxLoading").fadeIn("fast");
   $("section#inicio").load("./pages/inicio.html", function() {
     $(this).show();
     $("#info_geral").attr("data-pagina-atual", "inicio");
@@ -326,7 +370,11 @@ $(document).on('ready', function() {
     $("#box_postar_img_perfil").attr("src", localStorage.getItem("aute_img_perfil"));
     $("#hide_usuario").val(localStorage.getItem("aute_id"));
     Timeline(0);
+    $(".BoxLoading").fadeOut("fast");
   });
+
+  $(".MenuEsquerdo .meuperfil img").attr("src",$("#info_usuario").attr("data-usuario-img-perfil"));
+  $(".MenuEsquerdo .meuperfil #nome").text($("#info_usuario").attr("data-usuario-nome"));
 
   $(window).scroll(function() {
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
@@ -343,7 +391,20 @@ $(document).on('ready', function() {
     }
   });
 
-  $("header").swipe({
+  $(document).on("click", "#AbreMenuEsquerdo", function() {
+    var status = $(this).attr("data-status");
+    if (status == "active") {
+      $(this).attr("data-status","none");
+      $(".MenuEsquerdo").animate({left: "-80%"}, 300);
+      $("#app").animate({left: "0"}, 300);
+    } else {
+      $(this).attr("data-status","active");
+      $(".MenuEsquerdo").animate({left: "0"}, 300);
+      $("#app").animate({left: "80%"}, 300);      
+    }
+  });
+
+  $(".header .title").swipe({
     swipeStatus: function(event, phase, direction, distance, duration, fingers, fingerData, currentDirection) {
       if (direction === "down") {
         var load = 'nao';
@@ -362,7 +423,10 @@ $(document).on('ready', function() {
         }, 300);
         if (load === "sim") {
           $(".atualiza_section span").html("<i class='fa fa-circle-o-notch fa-spin fa-3x fa-fw'></i><span class='sr-only'>Carregando...</span>");
+          var pagina_atual = $("#info_geral").attr("data-pagina-atual");
+          var id = $("#info_geral").attr("data-id-ref");
           window.location.href = 'index.html';
+
         }
       }
 
@@ -370,11 +434,6 @@ $(document).on('ready', function() {
     threshold: 0,
     maxTimeThreshold: 100,
     fingers: 'all'
-  });
-
-  $(document).on("click", "#BtnSair", function() {
-    localStorage.clear();
-    VerificaAuth();
   });
 
   $(document).on("click", ".ModalSobralenseAbrir", function() {
@@ -388,7 +447,7 @@ $(document).on('ready', function() {
     $(".ModalSobralense").fadeOut();
     $(".ModalSobralenseClose span").text("");
     $(".ModalSobralenseContent").html("");
-    $("header").show();
+    $(".header").show();
   });
 
   $(document).on("click", "[data-a=navegar]", function() {
@@ -396,6 +455,10 @@ $(document).on('ready', function() {
     var title = $(this).attr("data-title");
     $("#info_geral").attr("data-pagina-atual", page);
     $(".BoxLoading").fadeIn("fast");
+
+    $("#AbreMenuEsquerdo").attr("data-status","none");
+    $(".MenuEsquerdo").animate({left: "-80%"}, 300);
+    $("#app").animate({left: "0"}, 300);
 
     $("section.pagina").fadeOut();
     $("section#" + page).fadeIn();
@@ -410,9 +473,9 @@ $(document).on('ready', function() {
       $("#btn_postar_mais").hide();
     }
 
-    $("header .title span.txt").text(title);
-    $("footer a").removeClass("active");
-    $(this).addClass("active");
+    $(".header .title span.txt").text(title);
+    $("[data-a=navegar]").removeClass("active");
+    $("[data-a=navegar][data-src="+page+"]").addClass("active");
 
     var data_load = $("section#" + page).attr("data-load");
     if (data_load === "n" || page === "perfil") {
@@ -450,6 +513,10 @@ $(document).on('ready', function() {
 
       if (page === "lugares") {
         Lugares("");
+      }
+
+      if (page === "mensagens") {
+        Mensagens("");
       }
 
     }
@@ -577,7 +644,7 @@ $(document).on('ready', function() {
 
     if (acao === "comentar") {
       var mensagem = $("#input_mensagem_comentar").val();
-      var url = PATH_API + ".comentar.php?token=" + token + "&mensagem=" + mensagem + "&id=" + id;
+      var url = PATH_API + "comentar.php?token=" + token + "&mensagem=" + mensagem + "&id=" + id;
       var retorno = Ajax(url, "", "GET", this);
       var k = $.parseJSON(retorno);
       $(this).attr("data-open", "n");
@@ -666,7 +733,7 @@ $(document).on('ready', function() {
       var retorno = Ajax(url, "", "GET", this);
       var k = $.parseJSON(retorno);
       ComentariosNoticia(id,k.id_com); //box_comentario_id_com
-      $(".detalhes_evento").scrollTop = $(".detalhes_evento").scrollHeight;
+      $(".detalhes_evento").scrollTop(screen.height);
       $("total_comentario_noticia_" + id).text(k.total_comentarios);
       return false;
     }
@@ -680,6 +747,12 @@ $(document).on('ready', function() {
       html = html.replace("{{titulo}}",k.nome);
       html = html.replace("{{endereco}}",k.endereco);
       html = html.replace("{{descricao}}",k.descricao);
+      $(".ModalSobralenseContent").html(html);
+    }
+
+    if (acao === "abre_conversa") {
+      var html = Ajax("./pages/conversa.html","","GET",this);
+      html = html.replace("{{id}}",id);
       $(".ModalSobralenseContent").html(html);
     }
   });
