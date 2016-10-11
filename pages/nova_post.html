@@ -34,7 +34,7 @@
       <input type="hidden" name="h" id="h" />
       <input type="hidden" name="image-upload" id="image-upload" />
       <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important;"></div>
-      <img src="" id="image">
+      <img src="" id="image" style="max-width: 100%;">
       <footer class="center">
         <button class="btn btn-info" id="voltar" type="button"><i class="fa fa-white fa-check" aria-hidden="true"></i> CONTINUAR</button>
       </footer>
@@ -49,7 +49,8 @@
   function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL
+      destinationType: Camera.DestinationType.DATA_URL,
+      correctOrientation: true
     });
     
     function onSuccess(imageData) {
