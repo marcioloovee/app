@@ -49,8 +49,7 @@
   function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL,
-      popoverOptions: new CameraPopoverOptions(300, 300, 200, 200, Camera.PopoverArrowDirection.ARROW_ANY)
+      destinationType: Camera.DestinationType.DATA_URL
     });
     
     function onSuccess(imageData) {
