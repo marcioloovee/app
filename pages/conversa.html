@@ -6,7 +6,11 @@
 		conversa.Carrega(0,"fim");
 
 
-		setInterval(function(){ conversa.Carrega(conversa.ultMsg,"fim"); }, 10000);
+		var AtualizaConversa = window.setInterval(function(){ conversa.Carrega(conversa.ultMsg,"fim"); }, 10000);
+		$(document).on("click", ".ModalSobralenseBtnClose", function() {
+			clearInterval(AtualizaConversa);
+		});
+		
 
 		$(document).on("click", ".BtnEnviarMensagem", function() {
 			var mensagem = $("#InputMensagem").val();

@@ -29,7 +29,6 @@
 					}
 				}
 			});
-			
 		}
 
 		this.Enviar = function(mensagem) {

@@ -366,14 +366,16 @@ function ChatSalas() {
   var last;
   if (retorno) {
     $.each(retorno, function(p, k) {
-      if (k.entrei == "S") var cri1 = "<span class='label label-info pull-right'>online</span>";
+      if (k.entrei == "S") var cri1 = "<span class='label label-info'>online</span>";
       else var cri1 = "";
-      if (k.status == "livre") var cri2 = "<span class='label label-success pull-right'>disponível</span>";
-      else var cri2 = "";
+      if (k.status == "livre") var cri2 = "<span class='label label-success'>disponível</span>";
+      else var cri2 = "<span class='label label-danger'>lotada</span>";
 
-      html += "<a class='ModalSobralenseAbrir' data-title='Sala: "+k.nome+"' data-a='acao' data-type='abre_chat' data-id='" + k.id + "'>"+
-      "<li class='list-group-item'>"+k.nome+" <span class='label label-primary pull-right'>"+k.total_usuarios+"</span>"+cri1+cri2+"</li>"+
-      "</a>";
+      if (k.status == "livre") html += "<a class='ModalSobralenseAbrir' data-title='Sala: "+k.nome+"' data-a='acao' data-type='abre_chat' data-id='" + k.id + "'>";
+      
+      html += "<li class='list-group-item'>"+k.nome+" <div class='pull-right'><span class='label label-primary'>"+k.total_usuarios+"</span> "+cri1+" "+cri2+"</div></li>";
+      
+      if (k.status == "livre") html += "</a>";
     });
     var pag = parseFloat(last) + 1;
     $("section#chat #hide_paginacao").val(pag);
