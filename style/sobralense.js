@@ -354,6 +354,36 @@ function Mensagens(busca) {
   $(".pagina_mensagens .lista").append(html);
 }
 
+
+
+function ChatSalas() {
+  var token = localStorage.getItem("aute_token");
+
+  var url = PATH_API + "chat_salas.php?token=" + token;
+  var retorno2 = Ajax(url, "", "GET", this);
+  retorno = $.parseJSON(retorno2);
+  var html = "";
+  var last;
+  if (retorno) {
+    $.each(retorno, function(p, k) {
+      if (k.entrei == "S") var cri1 = "<span class='label label-info pull-right'>online</span>";
+      else var cri1 = "";
+      if (k.status == "livre") var cri2 = "<span class='label label-success pull-right'>disponível</span>";
+      else var cri2 = "";
+
+      html += "<a class='ModalSobralenseAbrir' data-title='Sala: "+k.nome+"' data-a='acao' data-type='abre_chat' data-id='" + k.id + "'>"+
+      "<li class='list-group-item'>"+k.nome+" <span class='label label-primary pull-right'>"+k.total_usuarios+"</span>"+cri1+cri2+"</li>"+
+      "</a>";
+    });
+    var pag = parseFloat(last) + 1;
+    $("section#chat #hide_paginacao").val(pag);
+  } else {
+    $(".btn-carregar-mais").html("");
+  }
+
+  $(".pagina_chat .lista").html(html);
+}
+
 $(document).on('ready', function() {
   VerificaAuth();
   Waves.init();
@@ -517,6 +547,11 @@ $(document).on('ready', function() {
 
       if (page === "mensagens") {
         Mensagens("");
+      }
+
+      if (page === "chat") {
+        ChatSalas();
+        setInterval(function() { ChatSalas(); }, 30000);
       }
 
     }
@@ -752,6 +787,12 @@ $(document).on('ready', function() {
 
     if (acao === "abre_conversa") {
       var html = Ajax("./pages/conversa.html","","GET",this);
+      html = html.replace("{{id}}",id);
+      $(".ModalSobralenseContent").html(html);
+    }
+
+    if (acao === "abre_chat") {
+      var html = Ajax("./pages/chat_aberto.html","","GET",this);
       html = html.replace("{{id}}",id);
       $(".ModalSobralenseContent").html(html);
     }

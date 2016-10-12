@@ -1,0 +1,33 @@
+<script src="./style/chat_aberto.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		conversa = new NovaConversa();
+		conversa.comSala = {{id}};
+		conversa.Carrega(0,"fim");
+
+
+		setInterval(function(){ conversa.Carrega(conversa.ultMsg,"fim"); }, 10000);
+
+		$(document).on("click", ".BtnEnviarMensagem", function() {
+			var mensagem = $("#InputMensagem").val();
+			if (mensagem) {
+				conversa.Enviar(mensagem);
+			} else {
+				$("#InputMensagem").focus();
+			}
+			
+			$("#InputMensagem").val("");
+		});
+	});
+</script>
+<div class="conversa" style="height: calc(100% - 120px); overflow: auto;">
+	
+</div>
+<footer class="comentar_noticia">
+	<div class="col-xs-10">
+		<textarea id="InputMensagem" style="width: 100%; height: 70px; background: inherit; border: 0px; padding: 5px; resize: none" placeholder="Escreva sua mensagem..."></textarea>
+	</div>
+	<div class="col-xs-2 BtnEnviarMensagem waves waves-cir btn btn-success" style="border-radius: 0px; height: 70px; line-height: 70px; padding: 0 6px;">
+		<i class="fa fa-send fa-white"></i>&nbsp;
+	</div>
+</footer>
