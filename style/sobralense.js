@@ -81,7 +81,7 @@ function Timeline(ult_post) {
               k.mensagem +
               "</div>";
             if (k.img_post) {
-              html += "<div class='timeline_img'><center><img src='" + k.img_post + "' class='img-responsive mt-sm' /></center></div>";
+              html += "<div class='timeline_img'><center><img src='" + k.img_post + "' class='img-responsive lazy' /></center></div>";
             }
             html += "</div>" +
               "<div class='timeline_footer btn-group' role='group'><div class='actions pull-left'>" +
@@ -170,6 +170,27 @@ function Explorar(busca) {
     $(".pagina_explorar .lista").append(html);
 }
 
+function Config() {
+  var token = localStorage.getItem("aute_token");
+  var retorno = Ajax(PATH_API + "config.php?token=" + token , "", "GET", "");
+  var k = $.parseJSON(retorno);
+  $(".pagina_configuracoes #InputNome").val(k.nome);
+  $(".pagina_configuracoes #InputBio").val(k.bio);
+  $(".pagina_configuracoes #InputSexo").val(k.sexo);
+  $(".pagina_configuracoes #InputDataNasc").val(k.data_nasc);
+  $(".pagina_configuracoes #InputPerfilEmail").val(k.perfil_email);
+  $(".pagina_configuracoes #InputWhatsapp").val(k.perfil_telefone);
+  $(".pagina_configuracoes #InputProfissao").val(k.perfil_profissao);
+  $(".pagina_configuracoes #InputSite").val(k.perfil_site);
+  $(".pagina_configuracoes #InputFacebook").val(k.link_facebook);
+  $(".pagina_configuracoes #InputYoutube").val(k.link_youtube);
+  $(".pagina_configuracoes #InputInstagram").val(k.link_instagram);
+  $(".pagina_configuracoes #InputBairro").val(k.id_bairro);
+  $(".pagina_configuracoes #InputEmail").val(k.email);
+  $(".pagina_configuracoes #InputUsuario").val(k.usuario);
+  $(".pagina_configuracoes #InputToken").val(token);
+}
+ 
 function Perfil(id) {
   var token = localStorage.getItem("aute_token");
   var eu = localStorage.getItem("aute_id");
@@ -181,8 +202,8 @@ function Perfil(id) {
   $(".pagina_perfil .topo .titulo").html(k.nome + "<br><small>@" + k.usuario + " | " + k.bairro + " | " + k.sexo + " | " + k.idade + " anos</small>");
   $(".pagina_perfil .topo .opcoes #total_seguidores").html(k.total_seguidores);
   $(".pagina_perfil .topo .opcoes #total_seguindo").html(k.total_seguindo);
-  $(".pagina_perfil .topo .ModalSobralenseAbrir").attr("data-title",k.nome);
-  $(".pagina_perfil .topo .ModalSobralenseAbrir").attr("data-id",id);
+  $("[data-type=abre_conversa]").attr("data-title",k.nome);
+  $("[data-type=abre_conversa]").attr("data-id",id);
   if (eu !== k.id) {
     $(".pagina_perfil .topo .opcoes2").show();
     $(".pagina_perfil .topo .opcoes2 .btn-seguir").attr("data-id", k.id);
@@ -193,6 +214,24 @@ function Perfil(id) {
       $(".pagina_perfil .topo .opcoes2 .btn-seguir").html("<i class='fa fa-check fa-white'></i> seguindo");
     }
   }
+
+  var info = "";
+  if (k.bio) info += "<div class='box' style='padding: 10px;'><strong><i class='icon ion-ios-help-empty'></i> Bio</strong><br>"+k.bio+"</div>";
+  if (k.link_facebook || k.link_instagram || k.link_youtube) {
+    info += "<div class='box' style='padding: 10px'>";
+    if (k.link_facebook)  info += "<a href='"+k.link_facebook+"' target='_new'><div class='col-xs-4 text-center'><i class='icon ion-social-facebook-outline fa-2x' style='color: #3b5998'></i></div></a>";
+    if (k.link_youtube)   info += "<a href='"+k.link_youtube+"' target='_new'><div class='col-xs-4 text-center'><i class='icon ion-social-youtube-outline fa-2x' style='color: #cd332d'></i></div></a>";
+    if (k.link_instagram) info += "<a href='"+k.link_instagram+"' target='_new'><div class='col-xs-4 text-center'><i class='icon ion-social-instagram-outline fa-2x' style='color: #3f729b'></i></div></a>";
+    info += "</div>";
+  }
+  if (k.perfil_email) info += "<div class='box' style='padding: 10px;'><strong><i class='icon ion-ios-email-outline'></i> E-mail</strong><br>"+k.perfil_email+"</div>";
+  if (k.perfil_telefone) info += "<div class='box' style='padding: 10px;'><strong><i class='icon ion-social-whatsapp-outline'></i> Whatsapp</strong><br>"+k.perfil_telefone+"</div>";
+  if (k.perfil_site) info += "<a href='"+k.perfil_site+"' target='_new'><div class='box' style='padding: 10px;'><strong><i class='icon ion-link'></i> Site</strong><br>"+k.perfil_site+"</div></a>";
+  if (k.perfil_profissao) info += "<div class='box' style='padding: 10px;'><strong><i class='icon ion-ios-cog-outline'></i> Profissão</strong><br>"+k.perfil_profissao+"</div>";
+  
+    
+
+  $(".pagina_perfil .mais_info").html(info);
 
 }
 
@@ -248,7 +287,7 @@ function Noticias(busca) {
     $.each(retorno, function(p, k) {
       html += "<a class='ModalSobralenseAbrir' data-title='Notícia...' data-a='acao' data-type='info_noticia' data-id='" + k.id + "'><div class='box'>" +
       "<div class='col-xs-3' style='margin: 0; padding: 0;'><img src='"+k.img+"' class='img-responsive' /></div>" +
-      "<div class='col-xs-9' style='padding: 5px;'><b>"+k.titulo+"</b><br>"+k.subtitulo+"<br><small><i>"+DataEvento(k.data_hora)+"</i></small></div><span class='pull-right' style='position: absolute; bottom: 5px; right: 5px;'><i class='fa fa-comment'></i> <span class='total_comentario_noticia_"+k.id+"'>"+k.total_comentarios+"</span></span>" +
+      "<div class='col-xs-9' style='padding: 5px; font-weight: normal'><b>"+k.titulo+"</b><br>"+k.subtitulo+"<br><small><i>"+DataEvento(k.data_hora)+"</i></small></div><span class='pull-right' style='position: absolute; bottom: 5px; right: 5px;'><i class='fa fa-comment'></i> <span class='total_comentario_noticia_"+k.id+"'>"+k.total_comentarios+"</span></span>" +
       "</div></a>";
     });
     var pag = parseFloat(last) + 1;
@@ -354,8 +393,6 @@ function Mensagens(busca) {
   $(".pagina_mensagens .lista").append(html);
 }
 
-
-
 function ChatSalas() {
   var token = localStorage.getItem("aute_token");
 
@@ -390,7 +427,8 @@ $(document).on('ready', function() {
   VerificaAuth();
   Waves.init();
   Waves.attach('footer a, .waves', null);
-
+  Waves.attach('.MenuEsquerdo a, .waves', null);
+  
   $("section.pagina").hide();
 
   $(".BoxLoading").fadeIn("fast");
@@ -405,6 +443,7 @@ $(document).on('ready', function() {
     $(".BoxLoading").fadeOut("fast");
   });
 
+  $(".MenuEsquerdo .meuperfil").attr("data-id",localStorage.getItem("aute_id"));
   $(".MenuEsquerdo .meuperfil img").attr("src",$("#info_usuario").attr("data-usuario-img-perfil"));
   $(".MenuEsquerdo .meuperfil #nome").text($("#info_usuario").attr("data-usuario-nome"));
 
@@ -497,6 +536,9 @@ $(document).on('ready', function() {
 
     if (page !== "perfil") {
       $("section#perfil").html("");
+      
+    } else {
+      title = "Perfil";
     }
 
     if (page === "inicio") {
@@ -549,6 +591,10 @@ $(document).on('ready', function() {
 
       if (page === "mensagens") {
         Mensagens("");
+      }
+
+      if (page === "configuracoes") {
+        Config();
       }
 
       if (page === "chat") {
@@ -797,6 +843,59 @@ $(document).on('ready', function() {
       var html = Ajax("./pages/chat_aberto.html","","GET",this);
       html = html.replace("{{id}}",id);
       $(".ModalSobralenseContent").html(html);
+    }
+
+    if (acao === "box_alterar_senha") {
+      var html = Ajax("./pages/alterar_senha.html","","GET",this);
+      html = html.replace("{{token}}",token);
+      $(".ModalSobralenseContent").html(html);
+
+    }
+
+    if (acao === "alterar_senha") {
+      var dados = $("#AlterarSenha").serializeArray();
+      $.ajax({
+        url: PATH_API + "alterar_senha.php",
+        method: "POST",
+        data: dados,
+        success: function(data) {
+          var k = $.parseJSON(data);
+          if (k.status === "success") {
+            alert("Senha alterada com sucesso! Entre com sua nova senha...");
+            Sair();
+          } else if (k.tipo === "campo") {
+            $("#AlterarSenha").find(".form-group").removeClass("has-error has-feedback");
+            $("#"+k.campo).focus().parent().addClass("has-error has-feedback");
+            alert(k.log);
+          } else {
+            alert(k.log);
+          }
+        }
+      });
+      return false;
+    }
+
+    if (acao === "editar_perfil") {
+      var dados = $("#EditarPerfil").serializeArray();
+      $.ajax({
+        url: PATH_API + "editar_perfil.php",
+        method: "POST",
+        data: dados,
+        success: function(data) {
+          var k = $.parseJSON(data);
+          if (k.status === "success") {
+            alert("Perfil atualizado!");
+            window.location.href='index.html';
+          } else if (k.tipo === "campo") {
+            $("#EditarPerfil").find(".form-group").removeClass("has-error has-feedback");
+            $("#"+k.campo).focus().parent().addClass("has-error has-feedback");
+            alert(k.log);
+          } else {
+            alert(k.log);
+          }
+        }
+      });
+      return false;
     }
   });
 

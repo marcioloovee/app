@@ -1,0 +1,75 @@
+<div class='pagina_configuracoes'>
+  <input type="hidden" id="hide_pagina"    value="configuracoes" />
+  <form class="box" style="padding: 10px;" name="EditarPerfil" id="EditarPerfil" onsubmit="return false;">
+    <input type="hidden" name="InputToken" id="InputToken"> 
+    <div class="form-group">
+      <label for="InputNome">Nome</label>
+      <input type="text" class="form-control" id="InputNome" name="InputNome" required>
+    </div>
+    <div class="form-group">
+      <label for="InputBio">Bio</label>
+      <textarea class="form-control" id="InputBio" name="InputBio" style="height: 100px !important;"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="InputBairro">Sexo</label>
+      <select class="form-control" id="InputSexo" name="InputSexo" required>
+        <option value="F">Feminino</option>
+        <option value="M">Masculino</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="InputNome">Data de nascimento</label>
+      <input type="date" class="form-control" id="InputDataNasc" name="InputDataNasc" required>
+    </div>
+    <h3>Informações públicas</h3><hr>
+    <div class="form-group">
+      <label for="InputPerfilEmail">E-mail</label>
+      <input type="email" class="form-control" id="InputPerfilEmail" name="InputPerfilEmail">
+    </div>
+    <div class="form-group">
+      <label for="InputWhatsapp">Whatsapp</label>
+      <input type="tel" class="form-control" id="InputWhatsapp" name="InputWhatsapp">
+    </div>
+    <div class="form-group">
+      <label for="InputProfissao">Profissão</label>
+      <input type="text" class="form-control" id="InputProfissao" name="InputProfissao">
+    </div>
+    <div class="form-group">
+      <label for="InputSite">Site</label>
+      <input type="url" class="form-control" id="InputSite" name="InputSite">
+    </div>
+    <h3>Mídias sociais</h3><hr>
+    <div class="form-group">
+      <label for="InputFacebook">Facebook</label>
+      <input type="text" class="form-control" id="InputFacebook" name="InputFacebook">
+    </div>
+    <div class="form-group">
+      <label for="InputYoutube">Youtube</label>
+      <input type="text" class="form-control" id="InputYoutube" name="InputYoutube">
+    </div>
+    <div class="form-group">
+      <label for="InputInstagram">Instagram</label>
+      <input type="text" class="form-control" id="InputInstagram" name="InputInstagram">
+    </div>
+    <h3>Localização</h3><hr>
+    <div class="form-group">
+      <label for="InputBairro">Bairro</label>
+      <select class="form-control" id="InputBairro" name="InputBairro" required>
+        <option>Alto do Cristo</option>
+        <option>Centro</option>
+      </select>
+    </div>
+    <h3>Informações da conta</h3><hr>
+    <div class="form-group">
+      <label for="InputEmail">E-mail</label>
+      <input type="email" class="form-control" id="InputEmail" name="InputEmail" required>
+    </div>
+    <div class="form-group">
+      <label for="InputUsuario">Usuário</label>
+      <input type="text" class="form-control" id="InputUsuario" name="InputUsuario" required>
+    </div>
+
+
+    <center><a class="btn btn-primeray ModalSobralenseAbrir" data-a='acao' data-type='box_alterar_senha' data-title="Alterar senha">Alterar senha</a> <button type="submit" class="btn btn-success" data-a='acao' data-type='editar_perfil'>Salvar</button></center>
+  </form>
+</div>

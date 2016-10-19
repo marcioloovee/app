@@ -1,0 +1,21 @@
+<form id="AlterarSenha" name="AlterarSenha" onsubmit="return false;">
+	<div style="padding: 10px;">
+		<input type="hidden" name="InputToken" id="InputToken" value="{{token}}">
+		<div class="form-group">
+		  <label for="InputSenhaAtual">Senha atual</label>
+		  <input type="password" class="form-control" name="InputSenhaAtual" id="InputSenhaAtual" required>
+		</div>
+		<div class="form-group">
+		  <label for="InputNovaSenha">Nova senha</label>
+		  <input type="password" class="form-control" name="InputNovaSenha" id="InputNovaSenha" required>
+		</div>
+		<div class="form-group">
+		  <label for="InputNovaSenha2">Repita a senha</label>
+		  <input type="password" class="form-control" name="InputNovaSenha2" id="InputNovaSenha2" required>
+		</div>
+	</div>
+		
+	<footer class="center" style="background: inherit;">
+	  <button class="btn btn-success" style='width: 100%; height: 50px; border-radius: 0px !important;' id="SalvarNovaSenha" type="submit" data-a='acao' data-type='alterar_senha'><i class="fa fa-white fa-check" aria-hidden="true"></i> SALVAR</button>
+	</footer>
+</form>

@@ -16,7 +16,7 @@ body {
 	font-size: 12px;
 	color: #FFF7EB;
 	margin: 0px;
-  background: #EAE8CC;
+  background: #F5F5F5;
 }
 #app { width: 100%; min-width: 280px !important; max-width: 400px !important; margin: 0 auto; position: absolute;}
 a { font-weight: 700; }
@@ -24,6 +24,7 @@ a, a:hover, a:active {
   text-decoration: none;
   color: inherit;
 }
+.MenuEsquerdo a { width: 100% !important; }
 .fa { color: #CBCBCB !important; }
 .fa:hover { color: #ABABAB !important; }
 .fa-success { color: green !important; }
@@ -79,7 +80,7 @@ section.pagina {
   height: 100% !important;
   position: relative;
   overflow: auto;
-  color: #3D2500;
+  color: #4E4E4E;
   z-index: 0;
 }
 .atualiza_section {
@@ -101,7 +102,7 @@ section.pagina {
 	border-bottom: 1px solid #EBEBEB;
   overflow: auto;
   padding-top: 10px;
-  background: rgba(255,255,255, 0.7);
+  background: #FFF;
   margin: 6px 6px;
   border-radius: 3px;
   position: relative;
@@ -203,7 +204,6 @@ section.pagina {
 .pagina_perfil .titulo small, .pagina_perfil .topo .opcoes span small { font-size: 12px; margin-top: 3px; }
 .pagina_perfil .tab {
   height: 30px;
-  background: #FFF;
   color: #333;
   text-shadow: 0px 1px 0px #EEE;
 }
@@ -221,6 +221,7 @@ section.pagina {
 .tab-perfil .tab-menu {
   overflow: auto;
   border-bottom: 1px solid #EEE;
+  background: #FFF;
   position: relative;
   z-index: 1;
 }
@@ -249,8 +250,8 @@ section.pagina {
   color: #c23e3e;
   border: 2px solid #c23e3e;
 }
-.tab-perfil .tab-item.active span {
-  box-shadow: 1px 1px 4px #999;
+.tab-perfil .tab-item.active {
+  color: #FAB523;
 }
 .pagina_explorar .explorar_item {
   float: left;
@@ -303,9 +304,10 @@ section.pagina {
   list-style: none;
 }
 .pagina_mensagens ul li {
-  background: rgba(255,255,255, 0.7);
+  background: #FFF;
   margin-bottom: 10px;
   padding: 5px;
+  margin: 6px;
   overflow: auto;
   border-radius: 3px;
 }
