@@ -30,7 +30,8 @@
   //function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.FILE_URI,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       correctOrientation: true
     });
     
@@ -69,7 +70,7 @@
           viewMode: 1,
           guides: false,
           zoomable: true,
-          aspectRatio: NaN,
+          aspectRatio: 1 / 1,
           preview: ".img-preview",
           crop: function (e) {
             $('#x').val(e.x);
