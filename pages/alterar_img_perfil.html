@@ -9,8 +9,10 @@
       <input type="hidden" name="w" id="w" />
       <input type="hidden" name="h" id="h" />
       <input type="hidden" name="image-upload" id="image-upload" />
-      <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important; color: #A2A2A2; text-align: center; padding-top: calc(50% - 11px); font-size: 22px; cursor: pointer;">
-        <i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+      <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important;">
+        <div style="color: #A2A2A2; text-align: center; padding-top: calc(50% - 11px); font-size: 22px; cursor: pointer;">
+          <i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+        </div>
       </div>
       <img src="" id="image" style="max-width: 100%;">
       <footer class="center">
@@ -28,7 +30,7 @@
   //function AbreCamera() {
     navigator.camera.getPicture(onSuccess, onFail, {
       quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL,
+      destinationType: Camera.DestinationType.FILE_URI,
       correctOrientation: true
     });
     
