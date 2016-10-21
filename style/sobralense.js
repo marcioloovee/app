@@ -191,12 +191,17 @@ function Config() {
   $(".pagina_configuracoes #InputToken").val(token);
 }
  
-function Perfil(id) {
+function Perfil(id) { 
   var token = localStorage.getItem("aute_token");
   var eu = localStorage.getItem("aute_id");
   var retorno = Ajax(PATH_API + "perfil.php?token=" + token + "&id=" + id, "", "GET", "");
   var k = $.parseJSON(retorno);
   $("#hide_usuario").val(k.id);
+  if (id == eu) {
+    $(".pagina_perfil .alterar_img").show();
+  } else {
+    $(".pagina_perfil .alterar_img").hide();
+  }
   $(".pagina_perfil .topo").css("background-image", "url(" + k.img_capa + ")");
   $(".pagina_perfil .topo .foto").html("<img src='" + k.img_perfil + "' height='80' width='80' class='img-thumbnail img-circle' />");
   $(".pagina_perfil .topo .titulo").html(k.nome + "<br><small>@" + k.usuario + " | " + k.bairro + " | " + k.sexo + " | " + k.idade + " anos</small>");
@@ -849,7 +854,6 @@ $(document).on('ready', function() {
       var html = Ajax("./pages/alterar_senha.html","","GET",this);
       html = html.replace("{{token}}",token);
       $(".ModalSobralenseContent").html(html);
-
     }
 
     if (acao === "alterar_senha") {
@@ -896,6 +900,12 @@ $(document).on('ready', function() {
         }
       });
       return false;
+    }
+
+    if (acao === "alterar_perfil") {
+      var html = Ajax("./pages/alterar_img_perfil.html","","GET",this);
+      html = html.replace("{{token}}",token);
+      $(".ModalSobralenseContent").html(html);
     }
   });
 

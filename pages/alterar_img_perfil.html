@@ -1,0 +1,116 @@
+<div class="box_postar">
+  <form id="formupload" method="post" enctype="multipart/form-data" onsubmit="return false;">
+    <input id="btn_selecionar_foto_" type="hidden">
+    <div class="foto">
+      <input type="hidden" name="token" value="{{token}}" />
+      <input type="hidden" name="acao" value="carregar" />
+      <input type="hidden" name="y" id="y" />
+      <input type="hidden" name="x" id="x" />
+      <input type="hidden" name="w" id="w" />
+      <input type="hidden" name="h" id="h" />
+      <input type="hidden" name="image-upload" id="image-upload" />
+      <div id="image-container" style="width: 100%; height: calc(100% - 105px) !important; color: #A2A2A2; text-align: center; padding-top: calc(50% - 11px); font-size: 22px; cursor: pointer;">
+        <i class="fa fa-picture-o" aria-hidden="true"></i> ENVIAR FOTO
+      </div>
+      <img src="" id="image" style="max-width: 100%;">
+      <footer class="center">
+        <button class="btn btn-success col-xs-6" id="btn_postar"><i class="fa fa-white fa-send" aria-hidden="true"></i> PUBLICAR</button>
+      </footer>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+    //console.log("Device carregado!");
+  }
+  $("#image-container").click(function() {
+  //function AbreCamera() {
+    navigator.camera.getPicture(onSuccess, onFail, {
+      quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL,
+      correctOrientation: true
+    });
+    
+    function onSuccess(imageData) {
+      $(".mensagem").hide();
+      $(".foto").show();
+      var $imageContainer = $('#image-container');
+      var $image = $('#image');
+      
+      
+      $("#image-upload").val("data:image/jpeg;base64," + imageData);
+      $("#btn_selecionar_foto_").val(imageData.substr(imageData.lastIndexOf('/')+1));
+      //console.log("Imagem: " + imageData.substr(imageData.lastIndexOf('/')+1));
+      
+      $image.attr({src: "data:image/jpeg;base64," + imageData}).load(function () {
+        $("#btn_salvar").show();
+        $("#formupload textarea").show();
+
+        var nome_img = $("#btn_selecionar_foto_").val();
+        if (imageData) {
+          $(".btn_upload").hide();
+          if (nome_img.length > 30) {
+            var nome_img2 = "";
+            for (var i=1; i<=30;i++,nome_img2+=nome_img[i]);
+            nome_img2 += "...";
+          } else {
+            var nome_img2 = nome_img;
+          }
+
+          $("#imagem_escolhida .nome").text("Imagem selecionada!");
+          $("#imagem_escolhida").show();
+        }
+
+        $imageContainer.html($image);
+        $image.cropper({
+          viewMode: 1,
+          guides: false,
+          zoomable: true,
+          aspectRatio: NaN,
+          preview: ".img-preview",
+          crop: function (e) {
+            $('#x').val(e.x);
+            $('#y').val(e.y);
+            $('#w').val(e.width);
+            $('#h').val(e.height);
+          }
+        });
+      });
+    }
+    function onFail(msg) {
+      //alert("Erro ao abrir camera: " + msg);
+    }
+  });
+  
+
+  $("#formupload").submit(function() {
+    
+    $.ajax({
+      type: "POST",
+      url: "http://www.sobralense.com.br/api/alterar_img_perfil.php",
+      data: new FormData(this),
+      async: false,
+      success: function (data) {
+        var k = $.parseJSON(data);
+        if (k.status === "success") {
+          Timeline(k.id_post);
+          $('.ModalSobralenseBtnClose').click();
+        } else {
+          alert(k.log);
+        }
+
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    });
+
+    return false;
+  });
+  
+  
+  $(document).on("click","#btn_postar",function() {
+    $("#formupload").submit();
+  });
+</script>
