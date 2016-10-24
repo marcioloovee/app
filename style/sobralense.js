@@ -202,7 +202,7 @@ function Perfil(id) {
   } else {
     $(".pagina_perfil .alterar_img").hide();
   }
-  $(".pagina_perfil .topo").css("background-image", "url(" + k.img_capa + ")");
+  $(".pagina_perfil .perfil_bg").css("background-image", "url(" + k.img_perfil + ")");
   $(".pagina_perfil .topo .foto").html("<img src='" + k.img_perfil + "' height='80' width='80' class='img-thumbnail img-circle' />");
   $(".pagina_perfil .topo .titulo").html(k.nome + "<br><small>@" + k.usuario + " | " + k.bairro + " | " + k.sexo + " | " + k.idade + " anos</small>");
   $(".pagina_perfil .topo .opcoes #total_seguidores").html(k.total_seguidores);
@@ -679,14 +679,14 @@ $(document).on('ready', function() {
 
           var html = "";
           $.each(k2.item_cur, function(p, k) {
-            html += "<li><a href='#'><img src='" + k.img_perfil + "' height='80' width='80'> <span style='line-height: 50px;'>" + k.usuario + "</span></a></li>";
+            html += "<li class='timeline_title' style='padding: 10px;'><a href='#'><img src='" + k.img_perfil + "' height='40' width='40' class='pull-left img-circle'> <span style='line-height: 40px; margin-left: 10px;'>" + k.usuario + "</span></a></li>";
           });
 
           var html2 = "";
           $.each(k2.item_com, function(p, k) {
-            html2 += "<li id='comentario" + k.id + "'><a href='#'><img src='" + k.img_perfil + "' height='80' width='80'> <span>" + k.usuario + "<br><small>" + k.comentario + "</small></span>";
-            if (code === k.id_usuario) html2 += "<i class='material-icons close' style='margin-top: -40px;' data-a='acao' data-type='remover' data-id='" + k.id + "' data-src='comentario' data-content='#comentario" + k.id + "'>close</i>";
-            html2 += "</a></li>";
+            html2 += "<li class='timeline_title' style='padding: 10px;' id='comentario" + k.id + "'><a href='#'><img src='" + k.img_perfil + "' height='40' width='40' class='pull-left img-circle'> <span style='line-height: 40px; margin-left: 10px;'>" + k.usuario + "<br><small style='padding-left: 50px;'>" + k.comentario + "</small></span>";
+            if (code === k.id_usuario) html2 += "<i class='ion-ios-close close' style='margin-top: -40px; padding: 20px;' data-a='acao' data-type='remover' data-id='" + k.id + "' data-src='comentario' data-content='#comentario" + k.id + "'></i>";
+            html2 += "</a><hr></li>";
           });
 
           $(".tab .tab_content_one ul").html(html);
@@ -710,7 +710,7 @@ $(document).on('ready', function() {
               $(div).fadeOut("slow");
             } else {
               alert(k.log);
-              $(".header").notify(l.log,{position: "bottom center",className:"error"});
+              $(".header").notify(k.log,{position: "bottom center",className:"error"});
             }
           }
         });

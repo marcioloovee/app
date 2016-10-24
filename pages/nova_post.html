@@ -123,7 +123,7 @@
           Timeline(k.id_post);
           $('.ModalSobralenseBtnClose').click();
         } else {
-          alert(k.log);
+          $(".header").notify(k.log,{position: "bottom center",className:"error"});
         }
 
       },

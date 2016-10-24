@@ -4,24 +4,24 @@
   <input type="hidden" id="hide_paginacao" value="1" />
 
 	<div class="content">
-    <div class="topo">
-      <!--<div style="position: absolute; margin: 5px; top: 50px; left: 0px; display: none;" class="alterar_img">
-        <button class="btn btn-info btn-xs ModalSobralenseAbrir" data-a="acao" data-type="alterar_capa" data-title="Alterar capa">trocar capa</button>
-      </div>-->
-      <div style="position: absolute; margin: 5px; top: 50px; right: 0px; display: none;" class="alterar_img">
-        <button class="btn btn-primary btn-xs ModalSobralenseAbrir" data-a="acao" data-type="alterar_perfil" data-title="Alterar perfil">trocar perfil</button>
-      </div>
-      
-      <div class="foto"></div>
-      <div class="titulo"></div>
-      <div class="opcoes col-xs-offset-2 col-xs-8">
-        <span class="col-xs-6"><span id="total_seguidores">0</span><br><small>seguidores</small></span>
-        <span class="col-xs-6"><span id="total_seguindo">0</span><br><small>seguindo</small></span>
-      </div>
-      <div class="opcoes2 col-xs-offset-2 col-xs-8" style="margin-top: 5px; display:none;">
-        <span class="col-xs-6 text-right">
-            <button class="btn-seguir btn btn-success btn-sm" data-a="acao" data-type="seguir_usuario"></button></span>
-        <span class="col-xs-6 text-left"><button class="btn btn-info btn-sm btn-raised ModalSobralenseAbrir" data-a="acao" data-type="abre_conversa" data-title="" data-id=""><i class="fa fa-comment fa-white"></i> mensagem</button></span>
+    <div class="perfil_bg" style="z-index: 0px; -webkit-filter: blur(2px); -moz-filter: blur(2px); -o-filter: blur(2px); -ms-filter: blur(2px); filter: blur(2px); width: 100%; height: 290px; position: absolute;"></div>
+    <div class="topo" style="z-index: 1px;">
+      <div style="-webkit-filter: blur(0px); -moz-filter: blur(0px); -o-filter: blur(0px); -ms-filter: blur(0px); filter: blur(0px);">
+        <div style="position: absolute; margin: 5px; top: 50px; left: 0px; display: none;" class="alterar_img">
+          <button class="btn btn-primary btn-xs ModalSobralenseAbrir" data-a="acao" data-type="alterar_perfil" data-title="Alterar perfil">trocar perfil</button>
+        </div>
+        
+        <div class="foto"></div>
+        <div class="titulo"></div>
+        <div class="opcoes col-xs-offset-2 col-xs-8">
+          <span class="col-xs-6"><span id="total_seguidores">0</span><br><small>seguidores</small></span>
+          <span class="col-xs-6"><span id="total_seguindo">0</span><br><small>seguindo</small></span>
+        </div>
+        <div class="opcoes2 col-xs-offset-2 col-xs-8" style="margin-top: 5px; display:none;">
+          <span class="col-xs-6 text-right">
+              <button class="btn-seguir btn btn-success btn-sm" data-a="acao" data-type="seguir_usuario"></button></span>
+          <span class="col-xs-6 text-left"><button class="btn btn-info btn-sm btn-raised ModalSobralenseAbrir" data-a="acao" data-type="abre_conversa" data-title="" data-id=""><i class="fa fa-comment fa-white"></i> mensagem</button></span>
+        </div>
       </div>
     </div>
     <div class='tab btn-group btn-group-justified tab-perfil'>
