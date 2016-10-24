@@ -953,7 +953,7 @@ $(document).on('ready', function() {
     };
 
     window.plugins.OneSignal
-      .startInit("0bd14f40-be15-41db-a6ec-b92fc2ad049e", "sobralense-1473692281013")
+      .startInit("0bd14f40-be15-41db-a6ec-b92fc2ad049e", "510157740664")
       .handleNotificationOpened(notificationOpenedCallback)
       .endInit();
   }
