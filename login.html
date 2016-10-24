@@ -146,11 +146,14 @@
                   <input type="email" id="inputEmail" class="form-control" placeholder="E-mail/Usuário" required autofocus>
                   <input type="password" id="inputSenha" class="form-control" placeholder="Senha" required>
                   <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="BtnEntrar">Entrar</button>
-                  <button class="btn btn-lg btn-primary btn-block btn-signin btn-facebook" type="submit"><i class="fa fa-facebook"></i> Entrar com Facebook</button>
+                  <button type="button" onclick="LoginFB();" class="btn btn-lg btn-primary btn-block btn-signin btn-facebook">
+                    <i class="fa fa-facebook"></i> Entrar com Facebook
+                  </button>
               </form>
               <a href="#" class="forgot-password">
                   Esqueci minha senha
               </a><br><br>
+              <div id="status"></div>
 
               <p class="text-center">
                 <a href="#" class="forgot-password">Criar uma nova conta?</a>
@@ -181,7 +184,6 @@
               localStorage.setItem("aute_nome",r.nome);
               localStorage.setItem("aute_usuario",r.usuario);
               localStorage.setItem("aute_img_perfil",r.img_perfil);
-              localStorage.setItem("aute_img_capa",r.img_capa);
               localStorage.setItem("aute_token",result.token);
               document.location="index.html";
               
@@ -212,6 +214,56 @@
         return false;
       });
     });
+
+
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '619707174856636',
+        cookie     : true,
+        xfbml      : true, 
+        version    : 'v2.8'
+      });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function LoginFB() {
+      FB.login(function(){
+        FB.api('/me?fields=id,name,email,gender,birthday,link', function(response) {
+          $.ajax({
+            type: "GET",
+            url: "http://www.sobralense.com.br/api/autenticar_facebook.php?device="+device+"&response="+JSON.stringify(response),
+            success: function(data) {
+              var result = $.parseJSON(data);
+              if (result.status === "success") {
+                var r = $.base64.decode(result.token);
+                var r = $.parseJSON(r);
+                
+                localStorage.setItem("aute_status","ok");
+                localStorage.setItem("aute_id",r.id);
+                localStorage.setItem("aute_email",r.email);
+                localStorage.setItem("aute_nome",r.nome);
+                localStorage.setItem("aute_usuario",r.usuario);
+                localStorage.setItem("aute_img_perfil",r.img_perfil);
+                localStorage.setItem("aute_token",result.token);
+                document.location="index.html";
+                
+              } else {
+                $("#reauth-email").html("Houve um erro. Tente novamente!");
+              }
+            }
+          });
+        });
+      }, {scope: 'public_profile,email'});
+    }
       
     </script>
   </body>
