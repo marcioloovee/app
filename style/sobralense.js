@@ -948,12 +948,14 @@ $(document).on('ready', function() {
   function onDeviceReady() {
     console.log("Device carregado!");
 
-    window.FirebasePlugin.getToken(function(token) {
-        // save this server-side and use it to push notifications to this device
+    FCMPlugin.getToken(
+      function(token){
         console.log(token);
-    }, function(error) {
-        console.error(error);
-    });
+      },
+      function(err){
+        console.log('error retrieving token: ' + err);
+      }
+    )
   }
 
   document.addEventListener("pause", onPause, false);
