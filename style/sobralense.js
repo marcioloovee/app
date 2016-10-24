@@ -452,6 +452,29 @@ $(document).on('ready', function() {
   $(".MenuEsquerdo .meuperfil img").attr("src",$("#info_usuario").attr("data-usuario-img-perfil"));
   $(".MenuEsquerdo .meuperfil #nome").text($("#info_usuario").attr("data-usuario-nome"));
 
+
+  /////////////////////////////////
+  var myElement = document.getElementsByClassName('lazy')[0];
+
+  var mc = new Hammer.Manager(myElement);
+
+  // create a pinch and rotate recognizer
+  // these require 2 pointers
+  var pinch = new Hammer.Pinch();
+  var rotate = new Hammer.Rotate();
+
+  // we want to detect both the same time
+  pinch.recognizeWith(rotate);
+
+  // add to the Manager
+  mc.add([pinch, rotate]);
+
+
+  mc.on("pinch rotate", function(ev) {
+      myElement.textContent += ev.type +" ";
+  });
+  ////////////////////////////////////
+
   $(window).scroll(function() {
     if ($(window).scrollTop() === $(document).height() - $(window).height()) {
       var page = $("#hide_pagina").val();
