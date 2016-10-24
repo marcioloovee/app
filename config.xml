@@ -12,13 +12,14 @@
   
   <gap:plugin name="cordova-plugin-whitelist" spec="1.3.0" source="npm" />
   <gap:plugin name="cordova-plugin-camera" source="npm" />
-  <gap:plugin name="cordova-plugin-fcm" source="npm" />
+  <gap:plugin name="onesignal-cordova-plugin" source="npm" />
   <preference name="show-splash-screen-spinner" value="true" />
   <preference name="auto-hide-splash-screen" value="true" />
   <preference name="android-minSdkVersion" value="19" />
   <preference name="android-installLocation" value="auto" />
   <preference name="android-permission" value="android.permission.WRITE_EXTERNAL_STORAGE" />
   <preference name="android-permission" value="android.permission.CAMERA" />
+  <preference name="android-build-tool" value="gradle" />
 
   <name>Sobralense</name>
 

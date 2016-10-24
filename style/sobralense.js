@@ -948,14 +948,14 @@ $(document).on('ready', function() {
   function onDeviceReady() {
     console.log("Device carregado!");
 
-    FCMPlugin.getToken(
-      function(token){
-        console.log(token);
-      },
-      function(err){
-        console.log('error retrieving token: ' + err);
-      }
-    )
+    var notificationOpenedCallback = function(jsonData) {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    };
+
+    window.plugins.OneSignal
+      .startInit("0bd14f40-be15-41db-a6ec-b92fc2ad049e", "sobralense-1473692281013")
+      .handleNotificationOpened(notificationOpenedCallback)
+      .endInit();
   }
 
   document.addEventListener("pause", onPause, false);
