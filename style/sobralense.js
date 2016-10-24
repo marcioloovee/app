@@ -947,6 +947,13 @@ $(document).on('ready', function() {
   
   function onDeviceReady() {
     console.log("Device carregado!");
+
+    window.FirebasePlugin.getToken(function(token) {
+        // save this server-side and use it to push notifications to this device
+        console.log(token);
+    }, function(error) {
+        console.error(error);
+    });
   }
 
   document.addEventListener("pause", onPause, false);
