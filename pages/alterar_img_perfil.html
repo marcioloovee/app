@@ -98,6 +98,7 @@
         var k = $.parseJSON(data);
         if (k.status === "success") {
           $(".MenuEsquerdo #img_perfil").attr("src",k.img);
+          localStorage.setItem("aute_img_perfil",k.img);
           Timeline(k.id_post);
           $('.ModalSobralenseBtnClose').click();
           $(".header").notify(k.log,{ position:"bottom center",className:"success"});
