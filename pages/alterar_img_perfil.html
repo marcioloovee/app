@@ -97,10 +97,12 @@
       success: function (data) {
         var k = $.parseJSON(data);
         if (k.status === "success") {
+          $(".MenuEsquerdo #img_perfil").attr("src",k.img);
           Timeline(k.id_post);
           $('.ModalSobralenseBtnClose').click();
+          $(".header").notify(k.log,{ position:"bottom center",className:"success"});
         } else {
-          alert(k.log);
+          $(".header").notify(k.log,{ position:"bottom center",className:"error"});
         }
 
       },

@@ -706,9 +706,11 @@ $(document).on('ready', function() {
           success: function(data) {
             var k = $.parseJSON(data);
             if (k.status === "success") {
+              $(".header").notify("Removido!",{ position:"bottom center",className:"success"});
               $(div).fadeOut("slow");
             } else {
               alert(k.log);
+              $(".header").notify(l.log,{position: "bottom center",className:"error"});
             }
           }
         });
@@ -735,6 +737,11 @@ $(document).on('ready', function() {
       var url = PATH_API + "comentar.php?token=" + token + "&mensagem=" + mensagem + "&id=" + id;
       var retorno = Ajax(url, "", "GET", this);
       var k = $.parseJSON(retorno);
+      if (k.status == "success") {
+        $(".header").notify(k.log,{ position:"bottom center",className:"success"});
+      } else {
+        $(".header").notify(k.log,{ position:"bottom center",className:"error"});
+      }
       $(this).attr("data-open", "n");
       $("#box_comentar_" + id).remove();
       $("#box_total_comentarios_" + id).text(k.total_comentarios);
@@ -820,6 +827,11 @@ $(document).on('ready', function() {
       var url = PATH_API + "comentar_noticia.php?token=" + token + "&mensagem=" + mensagem + "&id=" + id;
       var retorno = Ajax(url, "", "GET", this);
       var k = $.parseJSON(retorno);
+      if (k.status == "success") {
+        $(".header").notify(k.log,{ position:"bottom center",className:"success"});
+      } else {
+        $(".header").notify(k.log,{ position:"bottom center",className:"error"});
+      }
       ComentariosNoticia(id,k.id_com); //box_comentario_id_com
       $(".detalhes_evento").scrollTop(screen.height);
       $("total_comentario_noticia_" + id).text(k.total_comentarios);
@@ -870,9 +882,9 @@ $(document).on('ready', function() {
           } else if (k.tipo === "campo") {
             $("#AlterarSenha").find(".form-group").removeClass("has-error has-feedback");
             $("#"+k.campo).focus().parent().addClass("has-error has-feedback");
-            alert(k.log);
+            $(".header").notify(k.log,{ position:"bottom center",className:"error"});
           } else {
-            alert(k.log);
+            $(".header").notify(k.log,{ position:"bottom center",className:"error"});
           }
         }
       });
@@ -893,9 +905,9 @@ $(document).on('ready', function() {
           } else if (k.tipo === "campo") {
             $("#EditarPerfil").find(".form-group").removeClass("has-error has-feedback");
             $("#"+k.campo).focus().parent().addClass("has-error has-feedback");
-            alert(k.log);
+            $(".header").notify(k.log,{ position:"bottom center",className:"error"});
           } else {
-            alert(k.log);
+            $(".header").notify(k.log,{ position:"bottom center",className:"error"});
           }
         }
       });
