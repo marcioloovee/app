@@ -24,7 +24,6 @@
   <preference name="android-installLocation" value="auto" />
   <preference name="android-permission" value="android.permission.WRITE_EXTERNAL_STORAGE" />
   <preference name="android-permission" value="android.permission.CAMERA" />
-  <preference name="android-build-tool" value="gradle" />
 
   <name>Sobralense</name>
 
