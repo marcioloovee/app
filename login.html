@@ -237,7 +237,7 @@
 
     function LoginFB() {
       FB.login(function(){
-        FB.api('/me?fields=id,name,email,gender,birthday,link', function(response) {
+        FB.api('/me?fields=id,name,email,gender,birthday,link,cover', function(response) {
           $.ajax({
             type: "GET",
             url: "http://www.sobralense.com.br/api/autenticar_facebook.php?device="+device+"&response="+JSON.stringify(response),

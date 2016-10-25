@@ -29,7 +29,7 @@ function VerificaAuth() {
   var e = localStorage.getItem("aute_token");
   var f = localStorage.getItem("aute_img_perfil");
   var g = localStorage.getItem("aute_nome");
-  if (a && b && c && d && e) {
+  if (a && b && c && e) {
     $("#info_usuario").attr("data-usuario-usuario", d);
     $("#info_usuario").attr("data-usuario-code", b);
     $("#info_usuario").attr("data-usuario-img-perfil", f);
@@ -174,6 +174,15 @@ function Config() {
   var token = localStorage.getItem("aute_token");
   var retorno = Ajax(PATH_API + "config.php?token=" + token , "", "GET", "");
   var k = $.parseJSON(retorno);
+
+  var bairros = Ajax(PATH_API + "lista_bairros.php?token=" + token , "", "GET", "");
+  var k2 = $.parseJSON(bairros);
+  var html = "<option value='' disabled selected>Defina seu bairro</option>";
+  $.each(k2.item, function(p, k3) {
+    html += "<option value='"+k3.id+"'>"+k3.nome+"</option>";
+  });
+  $(".pagina_configuracoes #InputBairro").html(html);
+
   $(".pagina_configuracoes #InputNome").val(k.nome);
   $(".pagina_configuracoes #InputBio").val(k.bio);
   $(".pagina_configuracoes #InputSexo").val(k.sexo);
@@ -715,6 +724,7 @@ $(document).on('ready', function() {
             }
           }
         });
+        $(".BoxLoading").fadeOut("fast");
         return false;
       }
     }
@@ -746,6 +756,7 @@ $(document).on('ready', function() {
       $(this).attr("data-open", "n");
       $("#box_comentar_" + id).remove();
       $("#box_total_comentarios_" + id).text(k.total_comentarios);
+      $(".BoxLoading").fadeOut("fast");
       return false;
     }
 
@@ -836,6 +847,7 @@ $(document).on('ready', function() {
       ComentariosNoticia(id,k.id_com); //box_comentario_id_com
       $(".detalhes_evento").scrollTop(screen.height);
       $("total_comentario_noticia_" + id).text(k.total_comentarios);
+      $(".BoxLoading").fadeOut("fast");
       return false;
     }
 
@@ -889,6 +901,7 @@ $(document).on('ready', function() {
           }
         }
       });
+      $(".BoxLoading").fadeOut("fast");
       return false;
     }
 
@@ -906,12 +919,13 @@ $(document).on('ready', function() {
           } else if (k.tipo === "campo") {
             $("#EditarPerfil").find(".form-group").removeClass("has-error has-feedback");
             $("#"+k.campo).focus().parent().addClass("has-error has-feedback");
-            $(".header").notify(k.log,{ position:"bottom center",className:"error"});
+            $("#"+k.campo).notify(k.log,{ position:"bottom center",className:"error"});
           } else {
             $(".header").notify(k.log,{ position:"bottom center",className:"error"});
           }
         }
       });
+      $(".BoxLoading").fadeOut("fast");
       return false;
     }
 
