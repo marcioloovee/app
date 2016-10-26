@@ -35,7 +35,6 @@ function VerificaAuth() {
     $("#info_usuario").attr("data-usuario-img-perfil", f);
     $("#info_usuario").attr("data-usuario-nome", g);
   } else {
-    window.stop();
     document.location = './login.html';
     //
   }

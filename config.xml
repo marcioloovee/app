@@ -20,6 +20,8 @@
   <preference name="auto-hide-splash-screen" value="true" />
   <preference name="android-minSdkVersion" value="19" />
   <preference name="android-installLocation" value="auto" />
+  <preference name="android-permission" value="android.permission.INTERNET" />
+  <preference name="android-permission" value="android.permission.ACCESS_NETWORK_STATE" />
   <preference name="android-permission" value="android.permission.WRITE_EXTERNAL_STORAGE" />
   <preference name="android-permission" value="android.permission.CAMERA" />
 
@@ -29,7 +31,7 @@
       Rede Social da Princesa do Norte!
   </description>
   
-  <access origin="*" />
+  <access origin="*" browserOnly="true"/>
 
   <author href="https://www.portamil.com.br" email="contato@portamil.com.br">
     PortaMil
