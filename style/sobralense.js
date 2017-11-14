@@ -1,5 +1,5 @@
 /* global PATH_API */
-localStorage.setItem("PATH_API", "http://192.168.1.3/sobralense/api/");
+localStorage.setItem("PATH_API", "http://www.portamil.com.br/sobralense/api/");
 //localStorage.setItem("PATH_API", "http://localhost/sobralense/api/");
 var PATH_API = localStorage.getItem("PATH_API");
 
